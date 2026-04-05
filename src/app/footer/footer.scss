@@ -1,0 +1,22 @@
+.foot {
+  background: #e0e0e0; // light gray background
+  padding: 20px 40px;
+  text-align: left; // align content to the left
+  border-top: 1px solid #ccc;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+
+  .text {
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #444;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+
+      transition: color 0.3s ease;
+      &:hover {
+        color: #1e90ff; // sky blue accent on hover
+      }
+    }
+  }
+}
