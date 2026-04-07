@@ -1,7 +1,4 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet, Routes } from '@angular/router';
-import { Header } from './header/header';
-import { Footer } from './footer/footer';
+import { Routes } from '@angular/router';
 import { Hotels } from './hotels/hotels';
 import { BookedRooms } from './booked-rooms/booked-rooms';
 import { Rooms } from './rooms/rooms';

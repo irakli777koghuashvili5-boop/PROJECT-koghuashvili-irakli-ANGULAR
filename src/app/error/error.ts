@@ -1,21 +1,17 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-error',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './error.html',
   styleUrl: './error.scss',
 })
 export class Error {
-  constructor(private x: Router){
-    console.log(this.x);
-  }
-  
-  id = 1;
+  constructor(private x: Router){}
 
   goToHome(){
-    this.x.navigateByUrl(`/home?id=${this.id}`);
+    this.x.navigateByUrl(`/home`);
   }
 
 }
