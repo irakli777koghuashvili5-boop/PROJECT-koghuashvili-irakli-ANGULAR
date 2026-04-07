@@ -1,0 +1,39 @@
+
+
+@for (item of products; track $index) {
+<div class="card">
+    <div class="discount">{{item.price.discountPercentage}}% OFF</div>
+    <img [src]="item.thumbnail" alt="Lenovo 3i Chromebook">
+    <div class="card-content">
+      <div class="rating">{{item.rating}}⭐</div>
+      <div class="title">{{item.title}}</div>
+      <div>
+        <span class="price">{{item.price.current}} {{item.price.currency}}</span>
+        <span class="old-price">{{item.price.beforeDiscount}} {{item.price.currency}}</span>
+      </div>
+      <div class="actions">
+        <button class="heart">♥</button>
+        <button class="cart">🛒</button>
+      </div>
+    </div>
+  </div>
+}
+
+<div class="pagination">
+  <button (click)="goToFirst()">«</button>
+  <button (click)="goToPrevious()">‹</button>
+
+  <button *ngFor="let page of pages"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)">
+    {{ page }}
+  </button>
+
+  <button (click)="goToNext()">›</button>
+  <button (click)="goToLast()">»</button>
+  <select (change)="onSelectChange($event)" class="select">
+    <option value="12">12</option>
+    <option value="24">24</option>
+    <option value="36">36</option>
+  </select>
+</div>

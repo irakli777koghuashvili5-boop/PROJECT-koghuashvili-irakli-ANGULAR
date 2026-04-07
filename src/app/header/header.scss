@@ -16,9 +16,9 @@
   }
 
   .right {
-    flex: 1; // take remaining space
+    flex: 1; 
     display: flex;
-    justify-content: center; // center nav horizontally
+    justify-content: center; 
 
     nav {
       ul {
@@ -37,7 +37,6 @@
             position: relative;
             transition: color 0.3s ease;
 
-            // animated underline
             &::after {
               content: "";
               position: absolute;
@@ -54,7 +53,7 @@
               color: #1e90ff;
 
               &::after {
-                width: 100%; // animate underline on hover
+                width: 100%;
               }
             }
 
@@ -63,7 +62,7 @@
               font-weight: 600;
 
               &::after {
-                width: 100%; // underline stays for active route
+                width: 100%;
               }
             }
           }

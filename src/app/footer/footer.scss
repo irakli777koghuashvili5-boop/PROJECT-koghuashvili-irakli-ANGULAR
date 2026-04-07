@@ -1,22 +1,170 @@
-.foot {
-  background: #e0e0e0; // light gray background
-  padding: 20px 40px;
-  text-align: left; // align content to the left
-  border-top: 1px solid #ccc;
-  box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+// .foot {
+//   background: #e0e0e0;
+//   padding: 20px 40px;
+//   text-align: left; 
+//   border-top: 1px solid #ccc;
+//   box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
 
-  .text {
-    p {
-      margin: 0;
-      font-size: 14px;
-      color: #444;
-      font-weight: 400;
-      letter-spacing: 0.5px;
+//   .text {
+//     p {
+//       margin: 0;
+//       font-size: 14px;
+//       color: #444;
+//       font-weight: 400;
+//       letter-spacing: 0.5px;
 
-      transition: color 0.3s ease;
-      &:hover {
-        color: #1e90ff; // sky blue accent on hover
-      }
-    }
+//       transition: color 0.3s ease;
+//       &:hover {
+//         color: #1e90ff; 
+//       }
+//     }
+//   }
+// }
+#footer {
+  background: #0a1f44;   /* dark blue */
+  color: #ccc;
+  padding: 40px;
+}
+
+/* Subscription area */
+#footer-subscribe {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#subscribe-input {
+  padding: 8px;
+  border-radius: 4px;
+  border: none;
+}
+
+#subscribe-button {
+  background: #e63946;   /* red button */
+  color: #fff;
+  padding: 8px 16px;
+  margin-left: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#subscribe-button:hover {
+  background: #c71c30;   /* darker red on hover */
+}
+
+/* Content area */
+#footer-content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  flex-wrap: wrap; /* allow wrapping */
+}
+
+#footer-about {
+  max-width: 250px;
+  margin-bottom: 20px;
+}
+
+#footer-social a {
+  margin-right: 10px;
+  color: #ccc;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+#footer-social a:hover {
+  color: #fff;
+}
+
+/* Links */
+#footer-links {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+#footer-links h4 {
+  margin-bottom: 10px;
+}
+
+#footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+#footer-links li a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+#footer-links li a:hover {
+  color: #fff;
+}
+
+/* Bottom */
+#footer-bottom {
+  border-top: 1px solid #444;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#footer-copy {
+  margin-bottom: 10px;
+}
+
+#footer-payments i {
+  margin-right: 12px;
+  font-size: 28px;
+  color: #ccc;
+  transition: color 0.3s;
+}
+
+#footer-payments i:hover {
+  color: #fff;
+}
+
+/* RESPONSIVE BREAKPOINTS */
+@media (max-width: 992px) {
+  #footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #footer-links {
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  #subscribe-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #subscribe-input {
+    margin-bottom: 10px;
+    width: 80%;
+  }
+
+  #subscribe-button {
+    margin-left: 0;
+    width: 50%;
+  }
+
+  #footer-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #footer-bottom {
+    flex-direction: column;
+    text-align: center;
   }
 }

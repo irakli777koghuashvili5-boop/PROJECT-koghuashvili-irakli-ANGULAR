@@ -1,29 +1,22 @@
 import { Routes } from '@angular/router';
-import { Hotels } from './hotels/hotels';
-import { BookedRooms } from './booked-rooms/booked-rooms';
-import { Rooms } from './rooms/rooms';
-import { Home } from './home/home';
-import { Error } from './error/error';
 
 export const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
     path: 'home',
-    component: Home,
+    loadComponent: () =>import('./home/home').then((m) => m.Home),
   },
   {
-    path: 'hotels',
-    component: Hotels,
-  },
-  {
-    path: 'booked-rooms',
-    component: BookedRooms,
-  },
-  {
-    path: 'rooms',
-    component: Rooms,
+    path: 'products',
+    loadComponent: () =>import('./products/products').then((m) => m.Products),    
   },
   {
     path:'**',
-    component: Error
+    loadComponent: () =>import('./error/error').then((m) => m.Error),
+  
   }
 ];
