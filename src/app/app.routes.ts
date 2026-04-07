@@ -6,6 +6,7 @@ import { Hotels } from './hotels/hotels';
 import { BookedRooms } from './booked-rooms/booked-rooms';
 import { Rooms } from './rooms/rooms';
 import { Home } from './home/home';
+import { Error } from './error/error';
 
 export const routes: Routes = [
   {
@@ -24,4 +25,8 @@ export const routes: Routes = [
     path: 'rooms',
     component: Rooms,
   },
+  {
+    path:'**',
+    component: Error
+  }
 ];

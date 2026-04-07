@@ -11,7 +11,7 @@ export class Error {
   constructor(private x: Router){
     console.log(this.x);
   }
-  user =`user`
+  
   id = 1;
 
   goToHome(){
