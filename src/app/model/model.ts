@@ -24,3 +24,20 @@ export class Product {
 
   images!: string[];
 }
+
+export class Category {
+  id!: string;
+  name!: string;
+  image!: string;
+}
+
+
+export class OnFilter{
+  total? : number
+  limit? : number
+  page? : number
+  sortedBy? : string
+  sortedDirection? : string
+  skip? : number
+  products? : Product[]
+}

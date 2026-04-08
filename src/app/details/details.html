@@ -1,0 +1,87 @@
+<div class="product-page">
+  <nav class="breadcrumb">
+    Home > Product page
+  </nav>
+    
+  <div class="product-container">
+    <div class="product-image">
+      <img src="https://i.imgur.com/6c1EkHS.jpg" alt="" />
+      <div class="discount">{{productArr[0].discountPercentage}}% OFF</div>
+    </div>
+
+    <div class="product-info">
+      <h1 class="title">{{productArr[3]}}</h1>
+      <div class="rating">⭐<span>{{productArr[8]}}</span></div>
+
+      <div class="price">
+        <span class="current">{{productArr[0].current}}{{productArr[0].currency}}</span>
+        <span class="before">1000 USD</span>
+      </div>
+
+
+      <div class="actions">
+        <button class="cart-btn" >Add to Cart</button>
+        <button class="fav-btn">♥</button>
+      </div>
+
+      <p class="description">{{productArr[4]}}</p>
+
+      <ul class="details">
+        <li>Shipping options</li>
+        <li>Warranty information</li>
+        <li>Payment and credit</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="specs">
+    
+
+    <h2>Product Details</h2>
+    <table>
+      <tr><td>Model:</td><td>{{productArr[3]}}</td></tr>
+      <tr><td>Gender:</td><td>Unisex</td></tr>
+      <tr><td>Screen Type:</td><td>Super Retina XDR</td></tr>
+      <tr><td>Refresh Rate:</td><td>60 Hz</td></tr>
+      <tr><td>Diagonal:</td><td>6.1"</td></tr>
+      <tr><td>Resolution:</td><td>2532×1170</td></tr>
+      <tr><td>Matrix Type:</td><td>OLED Display Retina XDR</td></tr>
+      <tr><td>Touch Points:</td><td>10</td></tr>
+
+      </table>
+    
+
+  </div>
+
+  
+  <div class="reviews">
+    <h2>Ratings & Reviews</h2>
+    <div class="average">Average rating: <strong>3.625</strong></div>
+
+    <div class="review">
+      <h3>Dom Cobb</h3>
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <p>Excellent device, reliable, highly recommended</p>
+    </div>
+
+    <div class="review">
+      <h3>Stanley Parable, Narrator</h3>
+      <div class="stars">⭐⭐⭐☆☆</div>
+      <p>Sorry, but you’re my story now</p>
+    </div>
+
+    <div class="review">
+      <h3>Cancer</h3>
+      <div class="stars">⭐☆☆☆☆</div>
+      <p>You can’t take me, I’m not alive</p>
+    </div>
+
+    <div class="review">
+      <h3>Rael</h3>
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <p>Hey, You, You’re Finally Awake</p>
+    </div>
+
+    <button class="review-btn">Leave a Review</button>
+  </div>
+</div>

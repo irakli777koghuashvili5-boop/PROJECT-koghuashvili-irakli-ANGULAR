@@ -1,16 +1,21 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Api } from '../services/api';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule} from '@angular/common';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-products',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './products.html',
   styleUrl: './products.scss',
 })
 export class Products {  
+  minPrice: number = 0;
+  maxPrice: number = 10000;
+
 onCount = 1;
+
 nextN() {
   this.onCount++;
   console.log(this.onCount);
@@ -22,10 +27,11 @@ prevN() {
   console.log(this.onCount);
 }
   constructor(private api : Api,private  cdr : ChangeDetectorRef) {}
+  keywords: string = '';
   products: any;
   productBtn: any;
-  totalPages = 4; 
-  currentPage = 1;   
+  totalPages: number = 4; 
+  currentPage: number = 1;   
   selectedValue: string = '12'  
     get pages(): number[] {
     const start = Math.max(1, this.currentPage - 2);
@@ -35,47 +41,114 @@ prevN() {
       pages.push(i);
     }
     return pages;
+   
   }
   goToPage(page: number) {
   if (page >= 1 && page <= this.totalPages) {
     this.currentPage = page;
     this.loadProducts();
+    this.cdr.detectChanges();
   }
 }
+
 goToFirst() {
   this.currentPage = 1;
   this.loadProducts();
+  this.cdr.detectChanges();
 }
 goToLast() {
   this.currentPage = this.totalPages;
   this.loadProducts();
+  this.cdr.detectChanges();
 }
 goToPrevious() {
   if (this.currentPage > 1) {
     this.currentPage--;
     this.loadProducts();
+    this.cdr.detectChanges();
   }
 }
 goToNext() {
   if (this.currentPage < this.totalPages) {
     this.currentPage++;
     this.loadProducts();
+    this.cdr.detectChanges();
   }
 }
   onSelectChange(event: Event) {
     const target = event.target as HTMLSelectElement;
     this.selectedValue = target.value;
     console.log('Selected:', this.selectedValue);
+    this.cdr.detectChanges();
   }
+newArrOfBr = [];
+tempArrOfObj:any = [];
+TheFiltredProductsByEverything = {}
+selectedBrand: string = 'all'
+
+
+giveFilter() {
+  
+  const params: any = {
+    page_index: this.currentPage,
+    page_size: this.selectedValue,
+    keywords: this.keywords,
+    category_id:Number(this.selectedCategories),    
+    brand: this.selectedBrand !== 'all' ? this.selectedBrand : null,
+    // rating:null,
+    price_min: this.minPrice,
+    price_max: this.maxPrice,
+    // sort_by: null,
+    sort_direction: this.selectedOrder
+  };
+
+  Object.keys(params).forEach(key => {
+    if (params[key] === null || params[key] === undefined || params[key] === ''|| params[key].length === 0) {
+      delete params[key];
+    }
+  });
+
+  console.log(this.selectedCategories);
+  
+
+
+  const queryString = new URLSearchParams(params).toString();
+
+ 
+  this.api.getAll(`shop/products/search?${queryString}`)
+    .subscribe((res: any) => {
+            this.products = res.products;  
+      this.TheFiltredProductsByEverything = res;
+      console.log(this.TheFiltredProductsByEverything);
+      this.cdr.detectChanges();
+    });
+}
+
 
     ngOnInit() {
     this.api.getAll(`shop/products/all?page_index=${this.currentPage}&page_size=${this.selectedValue}`).subscribe((res: any) => {
     this.products = res.products;
     console.log(this.products);
     this.cdr.detectChanges();
+    console.log(this.products._id);
     console.log(this.currentPage);
     console.log(this.selectedValue);
-  })}
+    this.api.getAll(`shop/products/brands`).subscribe((res: any) => {;    
+      this.newArrOfBr = res || [];
+      console.log(this.newArrOfBr);
+       this.cdr.detectChanges();
+    });
+    this.api.getAll(`shop/products/categories`).subscribe((res: any) => {;    
+      this.tempArrOfObj = res;
+      console.log(this.tempArrOfObj);
+       this.cdr.detectChanges();
+    })
+  })
+  // this.api.getAll(`shop/products/search?page_index=${this.currentPage}&page_size=${this.selectedValue}&keywords=${this.keywords}&category_id=${this}&brand=${this}&rating=${this}&price_min=${this}&price_max=${this}&sort_by=${this}&sort_direction=${this}`)
+  console.log(this.keywords);
+  
+
+}
 
   loadProducts() {
   this.api.getAll(
@@ -84,19 +157,35 @@ goToNext() {
     next: (res: any) => {
       this.products = res.products; 
       console.log('Products:', this.products);
+      this.cdr.detectChanges();
     },
   });
 }
 
-newArrOfBr = [];
 
-giveBrands(){
-  this.api.getAll(`products/brands`).subscribe((res: any) => {
-    this.newArrOfBr = res.brands;
-    console.log(this.newArrOfBr);
+  selectedCategories: number[] = [];
+  selectedOrder: string = 'asc';
+  
+
+  onCategoryChange(event: Event, item: any) {
+    const checked = (event.target as HTMLInputElement).checked;
+    if (checked) {
+      this.selectedCategories.push(item.id);
+    } else {
+      this.selectedCategories = this.selectedCategories.filter(id => id !== item.id);
+    }
+    console.log('Selected IDs:', this.selectedCategories);
+  }
+
+  resetFilters() {
+    this.api.getAll(`shop/products/all?page_index=${this.currentPage}&page_size=${this.selectedValue}`).subscribe((res: any) => {
+    this.products = res.products;
+    console.log(this.products);
     this.cdr.detectChanges();
-  }) 
-}
+  });
+
 
 }
 
+
+}
