@@ -1,43 +1,51 @@
+// import { ChangeDetectorRef, Component } from '@angular/core';
+// import { Api } from '../services/api';
+// import { FormsModule } from '@angular/forms';
+// import { CommonModule} from '@angular/common';
+// import { RouterLink } from "@angular/router";
+// import { Options } from '@angular-slider/ngx-slider';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Api } from '../services/api';
 import { FormsModule } from '@angular/forms';
-import { CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from "@angular/router";
-import { Options } from '@angular-slider/ngx-slider';
+import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 
 @Component({
   selector: 'app-products',
-  imports: [FormsModule, CommonModule, RouterLink, ],
+  standalone: true,
+  imports: [FormsModule, CommonModule, RouterLink, NgxSliderModule],
   templateUrl: './products.html',
   styleUrl: './products.scss',
 })
 export class Products {  
-   minValue: number = 100;
-  maxValue: number = 400;
+//   minPrice: number = 0;
+//   maxPrice: number = 10000;
+
+// onCount = 1;
+
+// nextN() {
+//   this.onCount++;
+//   console.log(this.onCount);
+// }
+// prevN() {
+//   if (this.onCount > 1) {
+//     this.onCount--;
+//   }
+//   console.log(this.onCount);
+// }
+  minPrice: number = 0;
+  maxPrice: number = 10000;
+
   options: Options = {
     floor: 0,
-    ceil: 500,
-    step: 10,
+    ceil: 10000,
     translate: (value: number): string => {
       return '$' + value;
     }
   };
-  minPrice: number = 0;
-  maxPrice: number = 10000;
 
-onCount = 1;
-
-nextN() {
-  this.onCount++;
-  console.log(this.onCount);
-}
-prevN() {
-  if (this.onCount > 1) {
-    this.onCount--;
-  }
-  console.log(this.onCount);
-}
-  constructor(private api : Api,private  cdr : ChangeDetectorRef) {}
+  constructor(private api: Api, private cdr: ChangeDetectorRef) {}
   keywords: string = '';
   products: any;
   productBtn: any;

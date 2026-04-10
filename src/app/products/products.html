@@ -60,15 +60,20 @@
     }
   </div>
 
- 
   <div id="filter-price">
-    <h4>Price Range</h4>
-    <input disabled id="price-slider" type="range" min="0" max="10000" step="100" value="5000">
-    <div id="price-inputs">
-      <input [(ngModel)]="minPrice" id="price-min" type="number" value="0">
-      <input  [(ngModel)]="maxPrice" id="price-max" type="number" value="10000">
-    </div>
+  <h4>Price Range</h4>
+
+  <ngx-slider [(value)]="minPrice"
+              [(highValue)]="maxPrice"
+              [options]="options">
+  </ngx-slider>
+
+  <div id="price-inputs">
+    <input [(ngModel)]="minPrice" id="price-min" type="number">
+    <input [(ngModel)]="maxPrice" id="price-max" type="number">
   </div>
+</div>
+
 
 
   <div id="filter-brands">
@@ -95,15 +100,15 @@
     <div class="discount">{{item.price.discountPercentage}}% OFF</div>
     <img [src]="item.thumbnail" alt="">
     <div class="card-content">
-      <div class="rating">{{item.rating}}⭐</div>
+      <div class="rating">{{item.rating}}<i class="fa-solid fa-star"></i></div>
       <div class="title">{{item.title}}</div>
       <div>
         <span class="price">{{item.price.current}} {{item.price.currency}}</span>
         <span class="old-price">{{item.price.beforeDiscount}} {{item.price.currency}}</span>
       </div>
       <div class="actions">
-        <button class="heart">♥</button>
-        <button class="cart">🛒</button>
+        <button class="heart"><i class="fa-solid fa-heart"></i></button>
+        <button class="cart"><i class="fa-solid fa-cart-arrow-down"></i></button>
       </div>
     </div>
   </div>

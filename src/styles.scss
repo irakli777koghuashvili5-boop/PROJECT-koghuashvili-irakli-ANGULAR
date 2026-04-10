@@ -5,3 +5,42 @@
     font-family: 'Noto Sans JP', sans-serif;
 }
 
+
+.ngx-slider {
+  margin-top: 6px !important; 
+  margin-bottom: 23px !important;        
+}
+
+.ngx-slider .ngx-slider-bar {
+  background: #f4f7f9 !important;
+  height: 6px !important;
+  border-radius: 3px !important;
+}
+
+.ngx-slider .ngx-slider-selection {
+  background: #f65a6f !important;
+}
+
+.ngx-slider .ngx-slider-pointer {
+  width: 36px !important;
+  height: 36px !important;
+  background: #f65a6f !important;
+  border: 3px solid #fff !important;
+  border-radius: 50% !important;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.ngx-slider .ngx-slider-pointer:focus,
+.ngx-slider .ngx-slider-pointer:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.ngx-slider .ngx-slider-pointer:hover {
+  transform: scale(1.15);
+}
+
+.ngx-slider .ngx-slider-bubble {
+  display: none !important; /* remove text labels above handles */
+}
