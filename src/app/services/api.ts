@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { Product } from '../model/model';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class Api {
   getAllHeader(url: string){
     return this.http.get(this.httpBase + url, {
       headers : {
-          "Authorization" : `Bearer token`
+          "Authorization" : `Bearer ${localStorage.getItem('access_token')} `
     }})
   }
 }

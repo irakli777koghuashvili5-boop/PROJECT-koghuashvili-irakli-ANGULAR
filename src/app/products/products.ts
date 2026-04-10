@@ -3,14 +3,25 @@ import { Api } from '../services/api';
 import { FormsModule } from '@angular/forms';
 import { CommonModule} from '@angular/common';
 import { RouterLink } from "@angular/router";
+import { Options } from '@angular-slider/ngx-slider';
 
 @Component({
   selector: 'app-products',
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink, ],
   templateUrl: './products.html',
   styleUrl: './products.scss',
 })
 export class Products {  
+   minValue: number = 100;
+  maxValue: number = 400;
+  options: Options = {
+    floor: 0,
+    ceil: 500,
+    step: 10,
+    translate: (value: number): string => {
+      return '$' + value;
+    }
+  };
   minPrice: number = 0;
   maxPrice: number = 10000;
 
