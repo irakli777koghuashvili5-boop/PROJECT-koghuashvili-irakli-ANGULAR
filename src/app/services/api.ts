@@ -13,4 +13,11 @@ export class Api {
   }
   postAll(url: string, body : any) {
     return this.http.post(this.httpBase + url, body)
-}}
+  }
+  getAllHeader(url: string){
+    return this.http.get(this.httpBase + url, {
+      headers : {
+          "Authorization" : `Bearer token`
+    }})
+  }
+}

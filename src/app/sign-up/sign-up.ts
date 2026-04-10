@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { Api } from '../services/api';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sign-up',
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, CommonModule],
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.scss',
 })
+
 export class SignUp {
-  constructor(private api : Api) {}
-  postResp = {}
+  constructor(private api: Api, private cdr: ChangeDetectorRef) {}
+
+  formVisible: boolean = true;
+  confirmationVisible: boolean = false;
   firstName = '';
   lastName = '';
   age = 1;
@@ -21,45 +24,46 @@ export class SignUp {
   address = '';
   phone = '';
   zipcode = '';
+  gender = 'MALE';
   avatar = "https://api.dicebear.com/9.x/adventurer/svg?seed=Valentina";
-  gender = '';
 
   onCreateAccount() {
-    const userData ={
-      "firstName": this.firstName,
-      "lastName": this.lastName,
-      "age": this.age,
-      "email": this.email,
-      "password": this.password,
-      "address": this.address,
-      "phone": this.phone,
-      "zipcode": this.zipcode,
-      "avatar": this.avatar,
-      "gender": this.gender
-    }   
-    this.api.postAll(`auth/sign_up`, userData)
-    .subscribe((res: any) => {
-      console.log(`Post Response:`, res);
-      this.postResp = res;
-      if(res._id){
-        alert(`Account created successfully`)
-        window.location.href = '/sign-in';
+  const userData = {
+    firstName: this.firstName,
+    lastName: this.lastName,
+    age: this.age,
+    email: this.email,
+    password: this.password,
+    address: this.address,
+    phone: this.phone,
+    zipcode: this.zipcode,
+    avatar: this.avatar,
+    gender: this.gender
+  };
+
+  this.api.postAll(`auth/sign_up`, userData).subscribe({
+    next: (res: any) => {
+      if (res && res._id) {
+        this.formVisible = false;
+        this.confirmationVisible = true;
+        this.cdr.detectChanges();
       }
-      
-    });
-    
-  }
-  ngOnInIt() {
-    console.log(this.firstName);
-    console.log(this.lastName);
-    console.log(this.age);  
-    console.log(this.email);
-    console.log(this.password);
-    console.log(this.address);
-    console.log(this.phone);
-    console.log(this.zipcode);
-    console.log(this.avatar);
-    console.log(this.gender);
+  },
+  })
+}
+ sendConfirm(){
+  console.log(this.email);
+  
+  this.api.postAll(`auth/verify_email`, {email: this.email}).subscribe({
+    next: (res: any) => {
+      console.log(res);
+      this.cdr.detectChanges();
+    },
+  });
+ }
+
+  ngOnInit() {
+    console.log('Component Initialized');
   }
 }
 

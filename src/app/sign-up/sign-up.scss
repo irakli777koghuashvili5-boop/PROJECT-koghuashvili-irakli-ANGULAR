@@ -158,3 +158,96 @@ $bg-light: #f4f7f9;
 
 .flex-1 { flex: 1; }
 .flex-2 { flex: 2; }
+
+
+/* ... Keep your existing variables and auth-card styles ... */
+
+// 1. Ensure the card handles the height change smoothly
+.auth-card {
+  min-height: 400px; // Keeps card stable during swap
+  transition: all 0.4s ease;
+}
+
+// 2. High-Visibility Success Block
+#success-block {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  .success-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 4px 10px rgba(76, 175, 80, 0.3));
+  }
+
+  h2 {
+    color: $dark;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  p#success-message {
+    color: $muted;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// 3. Action Buttons for Success
+#success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+
+  button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: $coral;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px $coral-glow;
+
+    &:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: $muted;
+    border: 1px solid $border;
+
+    &:hover {
+      background: $bg-light;
+      border-color: darken($border, 10%);
+    }
+  }
+}
+
+// 4. Success Animation
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+

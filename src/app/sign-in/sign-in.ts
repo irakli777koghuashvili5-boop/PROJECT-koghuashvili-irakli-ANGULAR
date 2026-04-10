@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { Api } from '../services/api';
 import { FormsModule } from '@angular/forms';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-sign-in',
@@ -29,5 +30,13 @@ export class SignIn {
          alert(`Logged in successfully`)
       }
   })
+  this.api.getAllHeader(`auth`)
+  .subscribe((res: any) => {
+    console.log(`Get Response:`, res);  
+})
+  }
+
+  ngOnInit() {
+    console.log('Component Initialized');
   }
 }
