@@ -40,6 +40,10 @@ export const routes: Routes = [
     loadComponent: () =>import('./cart/cart').then((m) => m.Cart),
   },
   {
+    path: `edit`,
+    loadComponent: () =>import('./edit/edit').then((m) => m.Edit),
+  },
+  {
     path:'**',
     loadComponent: () =>import('./error/error').then((m) => m.Error),
   

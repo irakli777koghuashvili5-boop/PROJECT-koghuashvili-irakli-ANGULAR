@@ -25,7 +25,7 @@ export class SignUp {
   phone = '';
   zipcode = '';
   gender = 'MALE';
-  avatar = "https://api.dicebear.com/9.x/adventurer/svg?seed=Valentina";
+  avatar = "https://api.dicebear.com/9.x/adventurer/svg?seed=Aiden";
 
   onCreateAccount() {
   const userData = {

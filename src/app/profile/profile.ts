@@ -2,18 +2,24 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Api } from '../services/api';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
 export class Profile {
   tab = 'details';
   arrOfProfile: any = {};
+  oldPassword = '';
+  newPassword = '';
+  showPopup = false;
+  showEditPopup = false;
+  
 
-  constructor(private api: Api , private cdr: ChangeDetectorRef){}
+  constructor(private api: Api , private cdr: ChangeDetectorRef,private x:Router){}
   ngOnInit(){
     this.api.getAllHeader(`auth`, {
        headers : {
@@ -32,7 +38,43 @@ export class Profile {
     localStorage.removeItem(`firstName`)
     localStorage.removeItem(`userId`)
     localStorage.removeItem(`refresh_token`)
-    window.location.reload();
+    window.location.href = '/sign-in'
+  }
+ changePass() {
+
+  const token = localStorage.getItem('access_token');
+  if (!token) {
+    console.error('No token found. User is not logged in.');
+    return; 
+  }
+  const apiUrl = 'https://api.everrest.educata.dev/auth/change_password';
+  this.api.patchData(apiUrl, {
+    oldPassword: this.oldPassword,
+    newPassword: this.newPassword
+  }).subscribe({
+    next: (res) => {
+      console.log('Password changed successfully:', res);
+      this.oldPassword = '';
+      this.newPassword = '';
+    },
+    error: (err) => {
+      console.error('Failed to change password:', err);
+    }
+  });
+}
+
+ updateProfile() {
+  const apiurl = `https://api.everrest.educata.dev/auth/update`
+    this.api.patchData(apiurl, this.arrOfProfile).subscribe({
+      next: (res) => {
+        alert('Profile updated successfully');
+        this.showEditPopup = false;
+      },
+      error: (err) => {
+        console.error('Update failed:', err);
+        alert('Failed to update profile');
+      }
+    });
   }
   
 }

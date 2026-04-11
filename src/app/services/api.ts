@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { Product } from '../model/model';
 
@@ -20,4 +20,12 @@ export class Api {
           "Authorization" : `Bearer ${localStorage.getItem('access_token')} `
     }})
   }
+patchData(url: string, body: any) {
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+    'Content-Type': 'application/json'
+  });
+
+  return this.http.patch(url, body, { headers });
+}
 }

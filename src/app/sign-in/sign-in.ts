@@ -43,9 +43,8 @@ export class SignIn {
             next: (res1: any) => {
               alert(`Welcome back`);
               localStorage.setItem('userId', res1._id);
-              localStorage.setItem('firstName', res1.firstName);
-              
-              this.router.navigateByUrl('/products');
+              localStorage.setItem('firstName', res1.firstName);     
+              window.location.href = '/profile';
               this.cdr.detectChanges();
             },
             error: (err: any) => {
