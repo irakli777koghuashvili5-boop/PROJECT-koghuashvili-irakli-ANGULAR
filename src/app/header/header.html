@@ -5,8 +5,8 @@
       <span></span><span></span><span></span>
     </button>
 
-    <div class="logo">
-    <img routerLink="/home"  src="https://everrest.educata.dev/logo.png" alt="">
+    <div routerLink="/home"  class="logo">
+    <img  src="https://everrest.educata.dev/logo.png" alt="">
     <p>EverREST</p>
     </div>
 
@@ -30,17 +30,17 @@
         <ul>
           <li routerLink="/home">home<i></i></li>
           <li routerLink="/products">products<i></i></li>
-          <li>about</li>
+          <li routerLink="qrcode">Qr Codes</li>
           <li routerLink="/cart"><i class="fa-solid fa-cart-arrow-down"></i>cart</li>
         </ul>
       </nav>
     </div>
     <div *ngIf="!seeSign" class="actions" routerLink="/profile">
-  <span class="btn-primary"> <i class="fa-solid fa-2x fa-circle-user"></i></span>
+  <span class="btn-primary"><i class="fa-regular fa-2x fa-user"></i></span>
 </div>
 
     <div *ngIf="seeSign" class="actions">
-  <button class="btn-primary" routerLink="/sign-in" routerLinkActive="activeRoute"><i class="fa-solid fa-2x fa-circle-user"></i>Sign in</button>
+  <button class="btn-primary" routerLink="/sign-in" routerLinkActive="activeRoute">Sign in</button>
 </div>
   </div>
 </header>

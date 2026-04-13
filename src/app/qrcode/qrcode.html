@@ -1,0 +1,65 @@
+<div class="qr-page">
+  <div class="qr-card">
+    
+    <div class="controls">
+      <header class="qr-header">
+        <h2 class="title">QR Studio</h2>
+        <div class="tabs-pill">
+          <button [class.active]="mode === 'url'" (click)="mode = 'url'; finalApiUrl = ''">URL</button>
+          <button [class.active]="mode === 'text'" (click)="mode = 'text'; finalApiUrl = ''">Text</button>
+        </div>
+      </header>
+
+      <div class="input-area">
+        <label class="field-label">Content Source</label>
+        <textarea 
+          [(ngModel)]="userInput" 
+          [placeholder]="mode === 'url' ? 'Enter your message with Url...' : 'Enter your message...'" 
+          rows="3">
+        </textarea>
+      </div>
+
+      @if (mode === 'url') {
+        <div class="input-area" style="margin-top: 15px;">
+          <label class="field-label">Center Image URL (Required)</label>
+          <input 
+            type="text" 
+            [(ngModel)]="imageURL" 
+            placeholder="https://example.com/logo.png">
+        </div>
+      }
+
+      <div class="settings-row" style="margin-top: 15px;">
+        <div class="input-field">
+          <label class="field-label">Size (px)</label>
+          <input type="number" [(ngModel)]="qrSize" [disabled]="mode === 'url'">
+        </div>
+      </div>
+
+      <button class="generate-btn" (click)="updateQR()" style="margin-top: 25px;">
+        <span>Generate QR</span>
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+      </button>
+    </div>
+
+   <div class="preview-panel">
+  <div class="qr-display-box" [class.active]="finalApiUrl">
+    @if (finalApiUrl) {
+      <img [src]="finalApiUrl" alt="QR Code" class="qr-img">
+      
+      <div class="hover-overlay" (click)="downloadImage()">
+        <i class="fa-solid fa-download"></i>
+        <span>Save QR Code</span>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <i class="fa-solid fa-qrcode"></i>
+        <p>Awaiting Generation</p>
+      </div>
+    }
+  </div>
+  <p class="helper-text">Generated via Everrest API</p>
+</div>
+    
+  </div>
+</div>
