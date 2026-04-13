@@ -16,8 +16,13 @@ export class Header {
   isMenuOpen = false;
   isScrolled = false;
   firstName = localStorage.getItem(`firstName`)
+  avatar = localStorage.getItem(`avatar`)
+  
   ngOnInit() {
     this.checkAuthentication();
+    this.avatar = localStorage.getItem(`avatar`)
+    console.log(this.avatar);
+    
   }
 
   checkAuthentication() {

@@ -44,6 +44,7 @@ export class SignIn {
               alert(`Welcome back`);
               localStorage.setItem('userId', res1._id);
               localStorage.setItem('firstName', res1.firstName);     
+              localStorage.setItem(`avatar`, res1.avatar)
               window.location.href = '/profile';
               this.cdr.detectChanges();
             },

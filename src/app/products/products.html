@@ -1,136 +1,137 @@
-
-<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-   <div class="carousel-item active">
-      <img src="https://imgstore.alta.ge/images/f46d7ed9-1875-4baa-9e39-e23ab9870a51c06835fd-7f74-4d11-b649-f24ab8e99544.jpeg" class="d-block w-100" alt="...">
+<div class="page-container">
+  
+  <div class="custom-carousel">
+    <div class="carousel-container">
+      @for (img of carouselImages; track $index) {
+        <div class="carousel-slide" [class.active]="$index === currentSlide">
+          <img [src]="img" alt="Promotional Banner">
+        </div>
+      }
     </div>
-    <div class="carousel-item">
-      <img src="https://imgstore.alta.ge/images/b9a2676e-f771-4c0c-a4a4-c22f2be77bf61e707548-c487-4906-b655-dce76ab55d99.jpeg" class="d-block w-100" alt="...">
+    
+    <button class="nav-btn prev" (click)="prevSlide()">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button class="nav-btn next" (click)="nextSlide()">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+    <div class="dots">
+      @for (img of carouselImages; track $index) {
+        <span class="dot" [class.active]="$index === currentSlide" (click)="setSlide($index)"></span>
+      }
     </div>
-    <div class="carousel-item">
-      <img src="https://imgstore.alta.ge/images/51234eed-cdc6-48a5-9939-7ce2d9bada99d1700f8e-e42f-472d-baf7-ad117db20341.jpeg" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://imgstore.alta.ge/images/245546b4-46ca-417b-b980-3695a92b807fa11a5bf3-fc10-454c-8311-dcb6af92239d.png" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://imgstore.alta.ge/images/3917999c-b426-44a3-9bbe-f1b33c394024c8b5ddc4-b3af-4908-b3a8-fe57aba6ccc6.png" class="d-block w-100" alt="...">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-
-<div class="heading">
-
-<div class="sele">
-  <div class="selet">
-  <p>sort by :</p>
-<select class="sel" [(ngModel)]="selectedOrder"  name="order">
-  <option value="asc">price asc</option>
-  <option value="desc">price desc</option>
-</select>
-  </div>
-  </div>
-  <div class="h">
-<h1 class="hh1">explore our products</h1>
-</div>
-</div>
-
-<div class="mainsec">
-<div id="filter-panel">
-
-  <div id="filter-search">
-    <label for="search-input">Search products</label>
-    <input id="search-input" [(ngModel)]="keywords"  type="text" placeholder="Search...">
   </div>
 
-
-  <div id="filter-categories">
-    <h4>Categories</h4>
-    @for (item of tempArrOfObj; track $index) { 
-    <label><input   [value]="item.id" 
-      (change)="onCategoryChange($event, item)"   type="checkbox" id="cat-laptops"> {{item.name}}</label>
-    }
-  </div>
-
-  <div id="filter-price">
-  <h4>Price Range</h4>
-
-  <ngx-slider [(value)]="minPrice"
-              [(highValue)]="maxPrice"
-              [options]="options">
-  </ngx-slider>
-
-  <div id="price-inputs">
-    <input [(ngModel)]="minPrice" id="price-min" type="number">
-    <input [(ngModel)]="maxPrice" id="price-max" type="number">
-  </div>
-</div>
-
-
-
-  <div id="filter-brands">
-    <h4>Brands</h4>
-    <select id="brand-select" [(ngModel)]="selectedBrand" name="brand">
-  <option value="all">All Brands</option>
-  <option *ngFor="let item of newArrOfBr" [value]="item">
-    {{ item }}
-  </option>
-</select>
-  </div>
-
-
-  <div id="filter-actions">
-    <button  (click)="giveFilter()" id="apply-btn">Apply Filters</button>
-    <button  (click)="resetFilters()" id="reset-btn">Reset</button>
-  </div>
-</div>
-
-<div class="mn">
-  <div class="child">
-@for (item of products; track $index) {
-<div class="card" routerLink="/details" [queryParams]="{id: item._id}">
-    <div class="discount">{{item.price.discountPercentage}}% OFF</div>
-    <img [src]="item.thumbnail" alt="">
-    <div class="card-content">
-      <div class="rating">{{item.rating}}<i class="fa-solid fa-star"></i></div>
-      <div class="title">{{item.title}}</div>
-      <div>
-        <span class="price">{{item.price.current}} {{item.price.currency}}</span>
-        <span class="old-price">{{item.price.beforeDiscount}} {{item.price.currency}}</span>
-      </div>
-      <div class="actions">
-        <button class="heart"><i class="fa-solid fa-heart"></i></button>
-        <button class="cart"><i class="fa-solid fa-cart-arrow-down"></i></button>
+  <div class="heading-section">
+    <div class="sele">
+      <div class="selet">
+        <p>sort by :</p>
+        <select class="sel" [(ngModel)]="selectedOrder" (ngModelChange)="onSortChange()" name="order">
+          <option value="asc">price asc</option>
+          <option value="desc">price desc</option>
+        </select>
       </div>
     </div>
+    <div class="h">
+      <h1 class="hh1">explore our products</h1>
+    </div>
   </div>
-}</div>
 
-<div class="pagination">
-  <button (click)="goToFirst()">«</button>
-  <button (click)="goToPrevious()">‹</button>
+  <div class="mainsec">
+    <div id="filter-panel">
+      <div id="filter-search">
+        <label for="search-input">Search products</label>
+        <input id="search-input" [(ngModel)]="keywords" type="text" placeholder="Search...">
+      </div>
 
-  <button *ngFor="let page of pages"
-          [class.active]="page === currentPage"
-          (click)="goToPage(page)">
-    {{ page }}
-  </button>
+      <div id="filter-categories">
+        <h4>Categories</h4>
+        <div class="category-list">
+          @for (item of tempArrOfObj; track $index) { 
+            <label>
+              <input [value]="item.id" (change)="onCategoryChange($event, item)" type="checkbox"> 
+              {{item.name}}
+            </label>
+          }
+        </div>
+      </div>
 
-  <button (click)="goToNext()">›</button>
-  <button (click)="goToLast()">»</button>
-  <select (change)="onSelectChange($event)" class="select">
-    <option value="12">12</option>
-    <option value="24">24</option>
-    <option value="36">36</option>
-  </select>
+      <div id="filter-price">
+        <h4>Price Range</h4>
+        <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options"></ngx-slider>
+        <div id="price-inputs">
+          <input [(ngModel)]="minPrice" id="price-min" type="number">
+          <input [(ngModel)]="maxPrice" id="price-max" type="number">
+        </div>
+      </div>
+
+      <div id="filter-brands">
+        <h4>Brands</h4>
+        <select id="brand-select" [(ngModel)]="selectedBrand" name="brand">
+          <option value="all">All Brands</option>
+          <option *ngFor="let item of newArrOfBr" [value]="item">{{ item }}</option>
+        </select>
+      </div>
+
+      <div id="filter-actions">
+        <button (click)="giveFilter()" id="apply-btn">Apply Filters</button>
+        <button (click)="resetFilters()" id="reset-btn">Reset</button>
+      </div>
+    </div>
+
+    <div class="product-listing">
+      <div class="child">
+        @for (item of products; track $index) {
+          <div class="card" routerLink="/details" [queryParams]="{id: item._id}">
+  <div class="discount">{{item.price.discountPercentage}}% OFF</div>
+  
+  <div class="img-wrapper">
+    <img [src]="item.thumbnail" [alt]="item.title">
+  </div>
+
+  <div class="card-content">
+    <div class="rating">
+      {{item.rating}} {{getStars(item.rating)}}
+    </div>
+
+    <div class="title">{{item.title}}</div>
+
+    <div class="price-row">
+      <span class="price">{{item.price.current}} {{item.price.currency}}</span>
+      <span class="old-price">{{item.price.beforeDiscount}} {{item.price.currency}}</span>
+    </div>
+
+    <div class="actions">
+      <button class="heart" (click)="$event.stopPropagation();">
+        <i class="fa-solid fa-heart"></i>
+      </button>
+      <button class="cart" (click)="$event.stopPropagation();">
+        <i class="fa-solid fa-cart-shopping"></i> 
+        <span>Add to Cart</span>
+      </button>
+    </div>
+  </div>
 </div>
-</div>
+        }
+      </div>
+
+      <div class="pagination-section">
+        <div class="pagination">
+          <button (click)="goToFirst()">«</button>
+          <button (click)="goToPrevious()">‹</button>
+          <button *ngFor="let page of pages" [class.active]="page === currentPage" (click)="goToPage(page)">
+            {{ page }}
+          </button>
+          <button (click)="goToNext()">›</button>
+          <button (click)="goToLast()">»</button>
+        </div>
+        <select [(ngModel)]="selectedValue" (ngModelChange)="onPageSizeChange()" class="select-size">
+          <option value="12">12</option>
+          <option value="24">24</option>
+          <option value="36">36</option>
+        </select>
+      </div>
+    </div>
+  </div>
 </div>

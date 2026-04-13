@@ -7,9 +7,9 @@
     </div>
 
     <ul class="menu">
-      <li (click)="tab='cart'" [class.active]="tab==='cart'">
+      <!-- <li (click)="tab='cart'" [class.active]="tab==='cart'">
         <span>🛒</span> Cart
-      </li>
+      </li> -->
       <li (click)="tab='wishlist'" [class.active]="tab==='wishlist'">
         <span>❤️</span> Wishlist
       </li>
@@ -25,10 +25,10 @@
 
   <main class="content">
 
-    <section *ngIf="tab==='cart'" class="panel">
+    <!-- <section *ngIf="tab==='cart'" class="panel">
       <h2>My Cart</h2>
       <p>Your cart is empty.</p>
-    </section>
+    </section> -->
 
     <section *ngIf="tab==='wishlist'" class="panel">
       <h2>Wishlist</h2>
@@ -50,7 +50,7 @@
         <div><span>Address</span><p>{{arrOfProfile.address}}</p></div>
         <div><span>Zipcode</span><p>{{arrOfProfile.zipcode}}</p></div>
       <button (click)="showEditPopup = true" class="edit-btn">✏️ Edit</button>
-        <div><button class="edit-btn">Delete Account</button></div>
+        <div><button (click)="deleteAcc()" class="edit-btn">Delete Account</button></div>
         <div><button (click)="showPopup = true" class="change-btn">Change password</button></div>
       </div>
     </section>

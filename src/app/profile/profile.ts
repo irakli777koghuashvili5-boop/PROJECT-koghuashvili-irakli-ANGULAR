@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Api } from '../services/api';
-import { Router, RouterLink } from '@angular/router';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
@@ -79,6 +79,24 @@ export class Profile {
         alert('Failed to update profile');
       }
     });
+  }
+  deleteAcc() {
+    const apiurL = `auth/delete`
+    this.api.deleteData(apiurL, this.arrOfProfile).subscribe({
+      next: (res) => {
+        alert('Account deleted successfully');
+        this.cdr.detectChanges();
+        localStorage.removeItem(`access_token`)
+        localStorage.removeItem(`refresh_token`)
+        localStorage.removeItem(`firstName`)
+        localStorage.removeItem(`userId`)
+        window.location.href = '/sign-in'
+      }
+      ,error: (err) => {
+        console.error('Delete failed:', err);
+        alert('Failed to delete account');
+      }
+    })
   }
   
 }

@@ -9,7 +9,7 @@ export class Api {
   constructor(private http: HttpClient) {}
   httpBase = `https://api.everrest.educata.dev/`;
   getAll(url: string) {
-    return this.http.get<Product[]>(this.httpBase + url);
+    return this.http.get(this.httpBase + url);
   }
   postAll(url: string, body : any) {
     return this.http.post(this.httpBase + url, body)
@@ -20,11 +20,23 @@ export class Api {
           "Authorization" : `Bearer ${localStorage.getItem('access_token')} `
     }})
   }
+  postAllHeader(url:string,body:any){
+    const headers = new HttpHeaders({
+      "Authorization" : `Bearer ${localStorage.getItem('access_token')} `
+    })
+    return this.http.post(this.httpBase + url, body, {headers})
+  }
   patchData(url: string, body: any) {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
       'Content-Type': 'application/json'
     });
     return this.http.patch(this.httpBase + url, body, { headers });
+  }
+  deleteData(url: string, body: any) {
+     return this.http.delete(this.httpBase + url, {
+      headers : {
+          "Authorization" : `Bearer ${localStorage.getItem('access_token')} `
+    }})
   }
 }

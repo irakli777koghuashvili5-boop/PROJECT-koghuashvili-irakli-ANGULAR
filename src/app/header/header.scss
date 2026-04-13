@@ -34,11 +34,20 @@ $border: #e7e7e9;
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: 700;
-  color: $dark;
-  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  img{
+    width: 50px;
+  }
+  p{
+    margin: 0;
+  }
+
 }
+
+
 
 .nav-content {
   display: flex;
