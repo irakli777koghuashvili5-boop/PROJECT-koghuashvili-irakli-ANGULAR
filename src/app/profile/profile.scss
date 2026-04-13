@@ -1,221 +1,160 @@
-/* RESET */
+
+$primary-red: #ff4d5a;
+$secondary-red: #ff6a75;
+$accent-cyan: #06b6d4;
+$sidebar-dark: #2f3a4a;
+$sidebar-deep: #1f2733;
+$bg-gradient: linear-gradient(135deg, #eef1f5, #dfe6ed);
+$glass-bg: rgba(2, 2, 5, 0.8);
+
+// Reset
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Segoe UI', 'Clash Display', sans-serif;
 }
 
-/* LAYOUT */
+// Layout
 .dashboard {
   display: flex;
   min-height: 90vh;
-  background: linear-gradient(135deg, #eef1f5, #dfe6ed);
-  
-}
-
-/* SIDEBAR */
-.sidebar {
-  width: 260px;
-  background: linear-gradient(180deg, #2f3a4a, #1f2733);
-  color: #fff;
-  padding: 25px 20px;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid rgba(255,255,255,0.05);
-  box-shadow: 4px 0 20px rgba(0,0,0,0.1);
-  
-}
-
-/* USER */
-.user {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.avatar {
-  font-size: 48px;
-  margin-bottom: 10px;
-}
-
-.user h3 {
-  color: #ff5a66;
-  margin-bottom: 5px;
-}
-
-.user p {
-  font-size: 13px;
-  opacity: 0.7;
-}
-
-/* MENU */
-.menu {
-  list-style: none;
-}
-
-.menu li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px;
-  margin-bottom: 8px;
-  border-radius: 10px;
-  cursor: pointer;
-  position: relative;
-  transition: all 0.25s ease;
-}
-
-/* hover glow */
-.menu li:hover {
-  background: rgba(255,255,255,0.08);
-  transform: translateX(6px);
-}
-
-/* active */
-.menu li.active {
-  background: linear-gradient(135deg, #ff4d5a, #ff6a75);
-  box-shadow: 0 5px 15px rgba(255, 77, 90, 0.4);
-}
-
-/* active indicator bar */
-.menu li.active::before {
-  content: "";
-  position: absolute;
-  left: -10px;
-  top: 20%;
-  height: 60%;
-  width: 4px;
-  background: #ff4d5a;
-  border-radius: 2px;
-}
-
-/* LOGOUT */
-.logout {
-  margin-top: auto;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: #ff5a66;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.logout:hover {
-  background: rgba(255, 90, 102, 0.1);
-}
-
-/* CONTENT */
-.content {
-  flex: 1;
-  padding: 40px;
-}
-
-/* PANEL */
-.panel {
-  background: #fff;
-  padding: 30px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  animation: fadeIn 0.3s ease;
-}
-
-.panel h2 {
-  margin-bottom: 20px;
-  color: #2f3a4a;
-}
-
-/* DETAILS GRID */
-.details .info {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.details .info div {
-  background: #f7f9fc;
-  padding: 15px;
-  border-radius: 10px;
-  transition: 0.2s;
-  border: 1px solid #eee;
-}
-
-.details .info div:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-}
-
-.details span {
-  font-size: 13px;
-  color: #888;
-}
-
-.details p {
-  font-weight: 600;
-  margin-top: 5px;
-  color: #333;
-}
-
-/* ANIMATION */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .dashboard {
-    flex-direction: column;
-  }
+  background: $bg-gradient;
 
   .sidebar {
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    overflow-x: auto;
-    padding: 10px;
-  }
-
-  .user {
-    display: none;
-  }
-
-  .menu {
+    width: 260px;
+    background: linear-gradient(180deg, $sidebar-dark, $sidebar-deep);
+    color: #fff;
+    padding: 25px 20px;
     display: flex;
-    width: 100%;
-    justify-content: space-around;
-  }
-
-  .menu li {
     flex-direction: column;
-    font-size: 12px;
-    padding: 10px;
-  }
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
 
-  .menu li:hover {
-    transform: none;
-  }
+    .user {
+      text-align: center;
+      margin-bottom: 30px;
 
-  .menu li.active::before {
-    display: none;
+      .avatar {
+        font-size: 48px;
+        margin-bottom: 10px;
+      }
+
+      h3 {
+        color: #ff5a66;
+        margin-bottom: 5px;
+      }
+
+      p {
+        font-size: 13px;
+        opacity: 0.7;
+      }
+    }
+
+    .menu {
+      list-style: none;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px;
+        margin-bottom: 8px;
+        border-radius: 10px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.25s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.08);
+          transform: translateX(6px);
+        }
+
+        &.active {
+          background: linear-gradient(135deg, $primary-red, $secondary-red);
+          box-shadow: 0 5px 15px rgba(255, 77, 90, 0.4);
+
+          &::before {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: 20%;
+            height: 60%;
+            width: 4px;
+            background: $primary-red;
+            border-radius: 2px;
+          }
+        }
+      }
+    }
+
+    .logout {
+      margin-top: auto;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: #ff5a66;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:hover {
+        background: rgba(255, 90, 102, 0.1);
+      }
+    }
   }
 
   .content {
-    padding: 20px;
-  }
+    flex: 1;
+    padding: 40px;
 
-  .details .info {
-    grid-template-columns: 1fr;
+    .panel {
+      background: #fff;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      animation: fadeIn 0.3s ease;
+
+      h2 {
+        margin-bottom: 20px;
+        color: $sidebar-dark;
+      }
+
+      .details .info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+
+        div {
+          background: #f7f9fc;
+          padding: 15px;
+          border-radius: 10px;
+          transition: 0.2s;
+          border: 1px solid #eee;
+
+          &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+          }
+
+          span {
+            font-size: 13px;
+            color: #888;
+          }
+
+          p {
+            font-weight: 600;
+            margin-top: 5px;
+            color: #333;
+          }
+        }
+      }
+    }
   }
 }
-/* EDIT BUTTON */
-.edit-btn {
+
+// Buttons
+.edit-btn, .change-btn {
   display: inline-flex;
   align-items: center;
   width: 100%;
@@ -224,394 +163,188 @@
   padding: 8px 14px;
   font-size: 16px;
   font-weight: 500;
-  color: #ff4d5a;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+.edit-btn {
+  color: $primary-red;
   background: rgba(255, 77, 90, 0.1);
   border: 1px solid rgba(255, 77, 90, 0.3);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.25s ease;
+
+  &:hover {
+    background: $primary-red;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(255, 77, 90, 0.3);
+  }
 }
 
-/* hover */
-.edit-btn:hover {
-  background: #ff4d5a;
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(255, 77, 90, 0.3);
-  transform: translateY(-1px);
-}
-
-/* click */
-.edit-btn:active {
-  transform: scale(0.96);
-  box-shadow: none;
-}
-
-/* focus (accessibility) */
-.edit-btn:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(255, 77, 90, 0.3);
-}
 .change-btn {
-  display: inline-flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  gap: 6px;
-  padding: 8px 14px;
-  font-size: 16px;
-  font-weight: 500;
   color: #5af143;
-  background: rgba(67, 208, 76, 0.096);
+  background: rgba(67, 208, 76, 0.1);
   border: 1px solid rgba(23, 145, 82, 0.3);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.25s ease;
+
+  &:hover {
+    background: #8bff4d;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(101, 255, 77, 0.3);
+  }
 }
 
-/* hover */
-.change-btn:hover {
-  background: #8bff4d;
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(101, 255, 77, 0.3);
-  transform: translateY(-1px);
-}
-
-/* click */
-.change-btn:active {
-  transform: scale(0.96);
-  box-shadow: none;
-}
-
-/* focus (accessibility) */
-.change-btn:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(77, 255, 124, 0.3);
-}
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.popup-content {
-  background: #fff;
-  padding: 25px;
-  border-radius: 8px;
-  width: 320px;
-  text-align: center;
-}
-
-.popup-content h2 {
-  margin-bottom: 15px;
-  font-size: 1.2rem;
-  color: #1a1f36;
-}
-
-.popup-content input {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-}
-
-.popup-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-}
-
-.btn-save {
-  background: #f65a6f;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.btn-cancel {
-  background: #eee;
-  color: #333;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.popup {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex; justify-content: center; align-items: center;
-}
-
-.popup-content {
-  background: #fff;
-  padding: 25px;
-  border-radius: 8px;
-  width: 320px;
-  text-align: center;
-}
-
-.popup-content input {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-}
-
-.popup-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-}
-
-.btn-save {
-  background: #f65a6f; color: #fff;
-  border: none; padding: 8px 12px;
-  border-radius: 6px; cursor: pointer;
-}
-
-.btn-cancel {
-  background: #eee; color: #333;
-  border: none; padding: 8px 12px;
-  border-radius: 6px; cursor: pointer;
-}
-.popup {
-  position: fixed;
-  top: 40px; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex; justify-content: center; align-items: center;
-}
-
-.popup-content {
-  background: #fff;
-  padding: 25px;
-  border-radius: 8px;
-  width: 350px;
-  text-align: center;
-}
-
-.popup-content input,
-.popup-content select {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-}
-
-.popup-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-}
-
-.btn-save {
-  background: #f65a6f; color: #fff;
-  border: none; padding: 8px 12px;
-  border-radius: 6px; cursor: pointer;
-}
-
-.btn-cancel {
-  background: #eee; color: #333;
-  border: none; padding: 8px 12px;
-  border-radius: 6px; cursor: pointer;
-}
-/* ==========================================================================
-   ZENITH POPUP SYSTEM - GLASS OVERRIDE
-   ========================================================================== */
-
+// Zenith Glass Popup System
 .popup {
   position: fixed !important;
   inset: 0 !important;
-  padding-top: 70px !important;
   width: 100vw !important;
   height: 100vh !important;
-  background: rgba(2, 2, 5, 0.8) !important; // Dark void background
-  backdrop-filter: blur(12px) saturate(180%) !important; // Deep refraction
+  background: $glass-bg !important;
+  backdrop-filter: blur(12px) saturate(180%) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   z-index: 9999 !important;
   animation: popupFadeIn 0.4s cubic-bezier(0.19, 1, 0.22, 1) !important;
-}
 
-.popup-content {
-  background: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 32px !important;
-  padding: 30px !important;
-  width: 90% !important;
-  max-width: 500px !important;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6) !important;
-  position: relative !important;
-  overflow: hidden !important;
-
-  // Frosted grain texture
-  &::before {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E") !important;
-    opacity: 0.04 !important;
-    pointer-events: none !important;
-  }
-
-  h2 {
-    color: #fff !important;
-    font-family: 'Clash Display', sans-serif !important;
-    font-size: 30px !important;
-    margin-bottom: 25px !important;
-    letter-spacing: -1px !important;
-    text-align: center !important;
-  }
-
-
-  input {
-    width: 100% !important;
-    background: rgba(0, 0, 0, 0.3) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 14px !important;
-    height: 35px !important; 
-    padding: 14px 18px !important;
-    color: #fff !important;
-    font-size: 0.95rem !important;
-    margin-bottom: 15px !important;
-    outline: none !important;
-    transition: all 0.3s ease !important;
-
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.3) !important;
-    }
-
-    &:focus {
-      border-color: #06b6d4 !important;
-      background: rgba(0, 0, 0, 0.5) !important;
-      box-shadow: 0 0 20px rgba(6, 182, 212, 0.2) !important;
-    }
-  }
-
-  select option {
-    background: #0f172a !important; // Dark background for select options
-    color: #fff !important;
-  }
-  select {
-    width: 100% !important;
-    background: rgba(0, 0, 0, 0.3) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 14px !important;
-    height: 50px !important; 
-    padding: 14px 18px !important;
-    color: #fff !important;
-    font-size: 0.95rem !important;
-    margin-bottom: 15px !important;
-    outline: none !important;
-    transition: all 0.3s ease !important;
-  }
-}
-
-// --- ACTION BUTTONS ---
-.popup-actions {
-  display: flex !important;
-  gap: 15px !important;
-  height: 55px !important;
-
-  button {
-    flex: 1 !important;
-    padding: 14px !important;
-    border-radius: 14px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1px !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    border: none !important;
-  }
-
-  .btn-save {
-    background: #fff !important;
-    color: #020205 !important;
-
-    &:hover {
-      background: #06b6d4 !important;
-      color: #fff !important;
-      transform: translateY(-3px) !important;
-      box-shadow: 0 10px 20px rgba(6, 182, 212, 0.3) !important;
-    }
-  }
-
-  .btn-cancel {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #94a3b8 !important;
-
-    &:hover {
-      background: rgba(255, 0, 0, 0.1) !important;
-      color: #ef4444 !important;
-      border-color: #ef4444 !important;
-    }
-  }
-}
-
-// --- ANIMATION ---
-@keyframes popupFadeIn {
-  from { 
-    opacity: 0 !important; 
-    backdrop-filter: blur(0px) !important;
-  }
-  to { 
-    opacity: 1 !important; 
-    backdrop-filter: blur(12px) !important;
-  }
-}
-/* Target the Edit Profile popup specifically */
-/* We look for the one containing the h2 'Edit Profile' or simply the one with many inputs */
-
-.popup:has(h2:contains("Edit Profile")), 
-.popup:nth-of-type(2) {
   .popup-content {
-    max-width: 420px !important; // Narrower width
-    padding: 30px !important;    // Tighter padding
-    
-    h2 {
-      font-size: 1.4rem !important; // Slightly smaller title
-      margin-bottom: 20px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 32px !important;
+    padding: 30px !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6) !important;
+    position: relative !important;
+    overflow: hidden !important;
+
+    &::before {
+      content: '' !important;
+      position: absolute !important;
+      inset: 0 !important;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E") !important;
+      opacity: 0.04 !important;
+      pointer-events: none !important;
     }
 
-    /* Create a grid for the inputs to save vertical space */
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 10px !important;
-
-    h2, .popup-actions {
-      grid-column: span 2 !important;
+    h2 {
+      color: #fff !important;
+      font-size: 30px !important;
+      margin-bottom: 25px !important;
+      letter-spacing: -1px !important;
+      text-align: center !important;
     }
 
     input, select {
-      margin-bottom: 0 !important; // Grid gap handles spacing now
-      padding: 10px 14px !important; // Slimmer inputs
-      font-size: 0.85rem !important;
+      width: 100% !important;
+      background: rgba(0, 0, 0, 0.3) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 14px !important;
+      padding: 14px 18px !important;
+      color: #fff !important;
+      margin-bottom: 15px !important;
+      outline: none !important;
+      transition: all 0.3s ease !important;
+
+      &:focus {
+        border-color: $accent-cyan !important;
+        box-shadow: 0 0 20px rgba(6, 182, 212, 0.2) !important;
+      }
     }
 
-    /* Make email and address span full width since they are usually long */
-    input[placeholder="Email"],
-    input[placeholder="Address"] {
-      grid-column: span 2 !important;
+    .popup-actions {
+      display: flex !important;
+      gap: 15px !important;
+
+      button {
+        flex: 1 !important;
+        padding: 14px !important;
+        border-radius: 14px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        cursor: pointer !important;
+        border: none !important;
+      }
+
+      .btn-save {
+        background: #fff !important;
+        color: #020205 !important;
+        &:hover {
+          background: $accent-cyan !important;
+          color: #fff !important;
+        }
+      }
+
+      .btn-cancel {
+        background: rgba(255, 255, 255, 0.05) !important;
+        color: #94a3b8 !important;
+        &:hover {
+          color: #ef4444 !important;
+          background: rgba(255, 0, 0, 0.1) !important;
+        }
+      }
+    }
+  }
+
+  // Edit Profile specific (Nth-type or has logic)
+  &:nth-of-type(2), &:has(h2:contains("Edit Profile")) {
+    .popup-content {
+      max-width: 420px !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 10px !important;
+
+      h2, .popup-actions { grid-column: span 2 !important; }
+      input, select { margin-bottom: 0 !important; }
+      input[placeholder="Email"], input[placeholder="Address"] { grid-column: span 2 !important; }
     }
   }
 }
 
-/* Ensure the Change Password popup (first one) stays centered and small too */
-.popup:nth-of-type(1) .popup-content {
-    max-width: 350px !important;
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popupFadeIn {
+  from { opacity: 0 !important; backdrop-filter: blur(0px) !important; }
+  to { opacity: 1 !important; backdrop-filter: blur(12px) !important; }
+}
+
+// Responsive
+@media (max-width: 900px) {
+  .dashboard {
+    flex-direction: column;
+
+    .sidebar {
+      width: 100%;
+      flex-direction: row;
+      overflow-x: auto;
+      padding: 10px;
+
+      .user { display: none; }
+
+      .menu {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+
+        li {
+          flex-direction: column;
+          font-size: 12px;
+          &:hover { transform: none; }
+          &.active::before { display: none; }
+        }
+      }
+    }
+
+    .content {
+      padding: 20px;
+      .details .info { grid-template-columns: 1fr; }
+    }
+  }
 }
