@@ -5,7 +5,7 @@
   min-height: 100vh;
   padding: 20px;
 }
-
+$c: #06b6d4; $r: #ff4d5a; $bg: #050508; $w: #fff;
 
 .custom-carousel {
   position: relative;
@@ -566,5 +566,91 @@ justify-self: center;
 
   .heading-section {
     padding: 20px;
+  }
+}
+ .marketing-carousel {
+    padding: 150px 8%;
+    .slide-large {
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; flex-wrap: wrap;
+      
+      .text-block {
+        .label { color: $c; font-weight: 700; text-transform: uppercase; font-size: 14px; }
+        h2 { font-size: clamp(2.5rem, 5vw, 5rem); margin: 20px 0; }
+        p { font-size: 1.2rem; line-height: 1.8; opacity: 0.7; }
+      }
+
+      .visual-placeholder {
+        height: 500px; background: rgba(255,255,255,0.02); border-radius: 40px;
+        border: 1px solid rgba(255,255,255,0.1);
+        &.shadow-cyan { box-shadow: 0 50px 100px -20px rgba(6,182,212,0.2); }
+        img{
+            width: 100%; height: 100%; object-fit: cover; border-radius: 40px;
+        }
+      }
+    }
+  }
+  $c: #06b6d4;
+$w: #fff;
+
+.brand-strip {
+  margin: 20px;
+  padding: 80px 0;
+  background: linear-gradient(135deg, #d9e4ec #f0f4f8, #d9e4ec);
+  overflow: hidden;
+  position: relative;
+
+  .strip-label {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 12px;
+    color: $c;
+    margin-bottom: 40px;
+    opacity: 0.8;
+  }
+
+  .logo-track {
+    display: flex;
+    width: 100%;
+    mask-image: linear-gradient(to right, transparent, rgb(0, 0, 0) 15%, rgb(0, 0, 0) 85%, transparent);
+    
+    .track-inner {
+      display: flex;
+      gap: 100px; // Large gap for that premium feel
+      animation: marquee 30s linear infinite;
+      
+      .brand {
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+        font-weight: 900;
+        color: rgba(0, 0, 0, 0.2); // Ghostly logos
+        white-space: nowrap;
+        transition: 0.4s;
+        cursor: default;
+        
+        &:hover {
+          color: $w;
+          transform: scale(1.1);
+          text-shadow: 0 0 20px $c;
+        }
+      }
+    }
+  }
+}
+
+// --- ANIMATION ---
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } // Moves halfway through the duplicated list
+}
+
+// Ensure the animation stays smooth and doesn't "snap"
+@media (prefers-reduced-motion: reduce) {
+  .track-inner { animation: none !important; overflow-x: auto; }
+}
+
+@media (max-width: 768px) {
+  .brand-strip {
+    padding: 40px 0;
+    .track-inner { gap: 50px; animation-duration: 15s; }
   }
 }

@@ -20,7 +20,7 @@
         <span>👤</span> Details
       </li>
     </ul>
-    <button (click)="logOutFn()" class="logout">Logout</button>
+    <button (click)="logOutFn()" class="logout">Sign Out</button>
   </aside>
 
   <main class="content">
@@ -44,14 +44,16 @@
       <h2>My Details</h2>
 
       <div class="info">
-        <div class="Detl"><span>Name</span><p>{{arrOfProfile.firstName}} {{arrOfProfile.lastName}}</p></div>
-        <div class="Detl"><span>Email</span><p>{{arrOfProfile.email}}</p></div>
-        <div class="Detl"><span>Phone</span><p>{{arrOfProfile.phone}}</p></div>
-        <div class="Detl"><span>Address</span><p>{{arrOfProfile.address}}</p></div>
-        <div class="Detl"><span>Zipcode</span><p>{{arrOfProfile.zipcode}}</p></div>
-      <button (click)="showEditPopup = true" class="edit-btn">✏️ Edit</button>
-        <div><button (click)="deleteAcc()" class="edit-btn">Delete Account</button></div>
+        <div class="Detl"><span>Name :</span><p>{{arrOfProfile.firstName}} {{arrOfProfile.lastName}}</p></div>
+        <div class="Detl"><span>Email :</span><p>{{arrOfProfile.email}}</p></div>
+        <div class="Detl"><span>Phone :</span><p>{{arrOfProfile.phone}}</p></div>
+        <div class="Detl"><span>Address :</span><p>{{arrOfProfile.address}}</p></div>
+        <div class="Detl"><span>Zipcode :</span><p>{{arrOfProfile.zipcode}}</p></div>
+        <div class="Detl"><span>gender :</span><p>{{arrOfProfile.gender}}</p></div>
+        <div><button (click)="showEditPopup = true" class="change-btn">✏️ Edit</button></div>
         <div><button (click)="showPopup = true" class="change-btn">Change password</button></div>
+        <div><button (click)="logOutFn()" class="edit-btn">Sign Out</button></div>
+        <div><button (click)="deleteAcc()" class="edit-btn">Delete Account</button></div>
       </div>
     </section>
 
