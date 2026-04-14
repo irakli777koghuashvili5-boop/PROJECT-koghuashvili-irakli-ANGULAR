@@ -39,87 +39,88 @@
   </div>
 
   <div class="mainsec">
-  <button class="filter-mobile-btn" (click)="toggleFilter()">
- <i class="fa-solid fa-filter"></i>
-  Filters
-</button>
+    <button class="filter-mobile-btn" (click)="toggleFilter()">
+      <i class="fa-solid fa-filter"></i>
+      Filters
+    </button>
 
-<div class="filter-overlay" [class.show]="isFilterOpen" (click)="toggleFilter()"></div>
+    <div class="filter-overlay" [class.show]="isFilterOpen" (click)="toggleFilter()"></div>
 
-<div id="filter-panel" [class.active]="isFilterOpen">
-  <button class="close-sidebar" (click)="toggleFilter()">×</button>
-  
-  <div id="filter-search">
-    <label for="search-input">Search products</label>
-    <input id="search-input" [(ngModel)]="keywords" type="text" placeholder="Search...">
-  </div>
+    <div id="filter-panel" [class.active]="isFilterOpen">
+      <button class="close-sidebar" (click)="toggleFilter()">×</button>
+      
+      <div id="filter-search">
+        <label for="search-input">Search products</label>
+        <input id="search-input" [(ngModel)]="keywords" type="text" placeholder="Search...">
+      </div>
 
-  <div id="filter-categories">
-    <h4>Categories</h4>
-    <div class="category-list">
-      @for (item of tempArrOfObj; track $index) { 
-        <label><input [value]="item.id" (change)="onCategoryChange($event, item)" type="checkbox">{{item.name}}</label>
-      }
+      <div id="filter-categories">
+        <h4>Categories</h4>
+        <div class="category-list">
+          @for (item of tempArrOfObj; track item.id) { 
+            <label><input  [value]="item.id" (change)="onCategoryChange($event, item)" type="checkbox">{{item.name}}</label>
+          }
+        </div>
+      </div>
+
+      <div id="filter-price">
+        <h4>Price Range</h4>
+        <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options"></ngx-slider>
+        <div id="price-inputs">
+          <input [(ngModel)]="minPrice" id="price-min" type="number">
+          <input [(ngModel)]="maxPrice" id="price-max" type="number">
+        </div>
+      </div>
+
+      <div id="filter-brands">
+        <h4>Brands</h4>
+        <select id="brand-select" [(ngModel)]="selectedBrand" name="brand">
+          <option value="all">All Brands</option>
+          @for (item of newArrOfBr; track $index) {
+            <option [value]="item">{{ item }}</option>
+          }
+        </select>
+      </div>
+
+      <div id="filter-actions">
+        <button (click)="giveFilter(); toggleFilter()" id="apply-btn">Apply Filters</button>
+        <button (click)="resetFilters()" id="reset-btn">Reset</button>
+      </div>
     </div>
-  </div>
-
-  <div id="filter-price">
-    <h4>Price Range</h4>
-    <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options"></ngx-slider>
-    <div id="price-inputs">
-      <input [(ngModel)]="minPrice" id="price-min" type="number">
-      <input [(ngModel)]="maxPrice" id="price-max" type="number">
-    </div>
-  </div>
-
-  <div id="filter-brands">
-    <h4>Brands</h4>
-    <select id="brand-select" [(ngModel)]="selectedBrand" name="brand">
-      <option value="all">All Brands</option>
-      <option *ngFor="let item of newArrOfBr" [value]="item">{{ item }}</option>
-    </select>
-  </div>
-
-  <div id="filter-actions">
-    <button (click)="giveFilter(); toggleFilter()" id="apply-btn">Apply Filters</button>
-    <button (click)="resetFilters()" id="reset-btn">Reset</button>
-  </div>
-</div>
 
     <div class="product-listing">
       <div class="child">
-        @for (item of products; track $index) {
+        @for (item of products; track item._id) {
           <div class="card" routerLink="/details" [queryParams]="{id: item._id}">
-  <div class="discount">{{item.price.discountPercentage}}% OFF</div>
-  
-  <div class="img-wrapper">
-    <img [src]="item.thumbnail" [alt]="item.title">
-  </div>
-  
+            <div class="discount">{{item.price.discountPercentage}}% OFF</div>
+            
+            <div class="img-wrapper">
+              <img [src]="item.thumbnail" [alt]="item.title">
+            </div>
 
-  <div class="card-content">
-    <div class="rating">
-      {{item.rating}} {{getStars(item.rating)}}
-    </div>
+            <div class="card-content">
+              <div class="rating">
+                {{item.rating}} {{getStars(item.rating)}}
+              </div>
 
-    <div class="title">{{item.title}}</div>
+              <div class="title">{{item.title}}</div>
 
-    <div class="price-row">
-      <span class="price">{{item.price.current}} {{item.price.currency}}</span>
-      <span class="old-price">{{item.price.beforeDiscount}} {{item.price.currency}}</span>
-    </div>
+              <div class="price-row">
+                <span class="price">{{item.price.current}} {{item.price.currency}}</span>
+                <span class="old-price">{{item.price.beforeDiscount}} {{item.price.currency}}</span>
+              </div>
 
-    <div class="actions">
-      <button class="heart" (click)="$event.stopPropagation();">
-        <i class="fa-solid fa-heart"></i>
-      </button>
-      <button class="cart" (click)="$event.stopPropagation();">
-        <i class="fa-solid fa-cart-shopping"></i> 
-        <span>Add to Cart</span>
-      </button>
-    </div>
-  </div>
-</div>
+              <div class="actions">
+                <button class="heart" (click)="$event.stopPropagation();">
+                  <i class="fa-solid fa-heart"></i>
+                </button>
+                <button class="cart" (click)="$event.stopPropagation();">
+                  <i class="fa-solid fa-cart-shopping"></i> 
+                  <span>Add to Cart</span>
+                </button>
+              </div>
+            </div>
+          </div>
         }
       </div>
 
@@ -127,9 +128,11 @@
         <div class="pagination">
           <button (click)="goToFirst()">«</button>
           <button (click)="goToPrevious()">‹</button>
-          <button *ngFor="let page of pages" [class.active]="page === currentPage" (click)="goToPage(page)">
-            {{ page }}
-          </button>
+          @for (page of pages; track page) {
+            <button [class.active]="page === currentPage" (click)="goToPage(page)">
+              {{ page }}
+            </button>
+          }
           <button (click)="goToNext()">›</button>
           <button (click)="goToLast()">»</button>
         </div>
@@ -142,7 +145,6 @@
     </div>
   </div>
 </div>
-
 
 <section class="brand-strip">
   <p class="strip-label">Partnering with Global Pioneers</p>

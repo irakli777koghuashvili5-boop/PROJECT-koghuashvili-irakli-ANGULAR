@@ -1,9 +1,9 @@
-
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Api } from '../services/api';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { header } from 'framer-motion/client';
 
 @Component({
   selector: 'app-details',
@@ -12,28 +12,28 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, FormsModule],
 })
 export class Details {
-  selectedId: number = 0;
+  selectedId: string = '';
   productArr: any[] = [];
   ratingsArr: any[] = [];
   images: string[] = [];
   quotesArr: any[] = [];
+  arrOfCart: any = {};
   comment: any;
-getStars(rating: number): string {
-  const validRating = Math.max(0, rating || 0);
-  const filledStars = '⭐'.repeat(validRating);
-  const emptyStars = '☆'.repeat(5 - validRating);
-  return filledStars + emptyStars;
-}
-
+  getStars(rating: number): string {
+    const validRating = Math.max(0, rating || 0);
+    const filledStars = '⭐'.repeat(validRating);
+    const emptyStars = '☆'.repeat(5 - validRating);
+    return filledStars + emptyStars;
+  }
 
   currentIndex: number = 0;
 
   constructor(
     private api: Api,
     private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.selectedId = params['id'];
       console.log('Selected ID:', this.selectedId);
     });
@@ -48,16 +48,19 @@ getStars(rating: number): string {
       console.log('Ratings:', this.ratingsArr);
       console.log('Images:', this.images);
       this.cdr.detectChanges();
-   this.productArr[12].forEach((item: any, index: number) => {
+      this.productArr[12].forEach((item: any, index: number) => {
         this.api.getAll(`quote/random`).subscribe({
           next: (res) => {
             this.quotesArr[index] = res;
             this.cdr.detectChanges();
           },
-          error: (err) => { console.log(`error: ` + err) }
+          error: (err) => {
+            console.log(`error: ` + err);
+          },
         });
       });
     });
+    this.getFromCart();
   }
 
   get currentImage(): string {
@@ -75,61 +78,98 @@ getStars(rating: number): string {
   setIndex(index: number): void {
     this.currentIndex = index;
   }
-  addToCart(){
-    this.api.postAllHeader(`shop/cart/product`,{   
-      "id": this.selectedId,
-      "quantity": 1
-    }).subscribe(
-      {
-      next: (res) => {
-        console.log(res)
-        alert('Product added to cart')
-      },
-      error: (err) => {
-        console.log(err)
-        alert('Failed to add product to cart')
-      }
-    })
+  getArrLength: any = 0;
+  getFromCart() {
+    this.api
+      .getAllHeader('shop/cart', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this.getArrLength = res.products.length;
+          this.arrOfCart = res;
+          this.cdr.detectChanges();
+          console.log(this.getArrLength);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
+  addToCart() {
+    const currentId = String(this.selectedId).trim();
+
+    if (this.getArrLength === 0) {
+      this.api
+        .postAllHeader(`shop/cart/product`, {
+          id: currentId,
+          quantity: 1,
+        })
+        .subscribe({
+          next: (res) => {
+            alert('cart created and product added!');
+            this.getFromCart(); 
+          },
+          error: (err) => console.log( err),
+        });
+    }
+
+    else {
+      let existingProduct = this.arrOfCart.products.find(
+        (item: any) => item.productId === currentId,
+      );
+      this.api
+        .patchData(`shop/cart/product`, {
+          id: currentId,
+          quantity: existingProduct ? existingProduct.quantity + 1 : 1,
+        })
+        .subscribe({
+          next: (res) => {
+            alert(existingProduct ? 'Quantity updated' : 'New product added to cart');
+            this.getFromCart();
+          },
+          error: (err) => {
+            console.log('Patch failed:', err);
+          },
+        });
+    }
   }
   isReviewPopupOpen: boolean = false;
-reviewData = {
-  comment: '',
-  category: 'Game' 
-};
+  reviewData = {
+    comment: '',
+    category: 'Game',
+  };
 
-openReviewPopup() {
-  this.isReviewPopupOpen = true;
-}
+  openReviewPopup() {
+    this.isReviewPopupOpen = true;
+  }
 
-closeReviewPopup() {
-  this.isReviewPopupOpen = false;
-  this.reviewData = { comment: '', category: 'Game' }; 
-}
+  closeReviewPopup() {
+    this.isReviewPopupOpen = false;
+    this.reviewData = { comment: '', category: 'Game' };
+  }
 
-submitReview() {
-  console.log('Review Submitted:', this.reviewData);
-  this.api.postAllHeader(`quote`, {
-    headers: {
-     "Authorization" : `Bearer ${localStorage.getItem('access_token')} `
-    },
-    body: {
-      "author": localStorage.getItem(`firstName`),
-      "quote": this.reviewData.comment,
-      "type": this.reviewData.category
-    }
-  }).subscribe({
-    next: (res => 
-      console.log(res)
-    ),
-    error: (err => 
-      console.log(err)
-    )
-  })
+  submitReview() {
+    console.log('Review Submitted:', this.reviewData);
+    this.api
+      .postAllHeader(`quote`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')} `,
+        },
+        body: {
+          author: localStorage.getItem(`firstName`),
+          quote: this.reviewData.comment,
+          type: this.reviewData.category,
+        },
+      })
+      .subscribe({
+        next: (res) => console.log(res),
+        error: (err) => console.log(err),
+      });
 
-  this.closeReviewPopup();
-}
-
-
-
-  
+    this.closeReviewPopup();
+  }
 }

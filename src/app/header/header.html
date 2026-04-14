@@ -1,13 +1,12 @@
-
 <header class="header" [class.scrolled]="isScrolled">
   <div class="container">
     <button class="burger" (click)="toggleMenu()" [class.active]="isMenuOpen">
       <span></span><span></span><span></span>
     </button>
 
-    <div routerLink="/home"  class="logo">
-    <img  src="https://everrest.educata.dev/logo.png" alt="">
-    <p>EverREST</p>
+    <div routerLink="/home" class="logo">
+      <img src="https://everrest.educata.dev/logo.png" alt="Logo">
+      <p>EverREST</p>
     </div>
 
     <div class="nav-content" [class.open]="isMenuOpen">
@@ -20,7 +19,8 @@
           </div>
           <button class="search-submit">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
           </button>
         </div>
@@ -28,19 +28,21 @@
 
       <nav class="main-nav">
         <ul>
-          <li routerLink="/home">home<i></i></li>
-          <li routerLink="/products">products<i></i></li>
-          <li routerLink="qrcode">Qr Codes</li>
-          <li routerLink="/cart"><i class="fa-solid fa-cart-arrow-down"></i>cart</li>
+          <li routerLinkActive="active" routerLink="/home">home<i></i></li>
+          <li routerLinkActive="active" routerLink="/products">products<i></i></li>
+          <li routerLinkActive="active" routerLink="qrcode">Qr Codes</li>
         </ul>
       </nav>
     </div>
-    <div *ngIf="!seeSign" class="actions" routerLink="/profile">
-  <span class="btn-primary"><i class="fa-regular fa-2x fa-user"></i></span>
-</div>
 
-    <div *ngIf="seeSign" class="actions">
-  <button class="btn-primary" routerLink="/sign-in" routerLinkActive="activeRoute">Sign in</button>
-</div>
+    @if (seeSign) {
+      <div class="actions">
+        <button class="btn-primary" routerLink="/sign-in" routerLinkActive="activeRoute">Sign in</button>
+      </div>
+    } @else {
+      <div class="actions" routerLink="/profile">
+        <span class="btn-primary"><i class="fa-regular fa-2x fa-user"></i></span>
+      </div>
+    }
   </div>
 </header>

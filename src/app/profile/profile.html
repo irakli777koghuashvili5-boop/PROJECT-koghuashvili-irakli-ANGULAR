@@ -7,11 +7,8 @@
     </div>
 
     <ul class="menu">
-      <!-- <li (click)="tab='cart'" [class.active]="tab==='cart'">
-        <span>🛒</span> Cart
-      </li> -->
-      <li (click)="tab='wishlist'" [class.active]="tab==='wishlist'">
-        <span>❤️</span> Wishlist
+      <li (click)="tab='cart'" [class.active]="tab==='cart'">
+         <span>🛒</span> Cart
       </li>
       <li (click)="tab='orders'" [class.active]="tab==='orders'">
         <span>📦</span> Orders
@@ -25,78 +22,130 @@
 
   <main class="content">
 
-    <!-- <section *ngIf="tab==='cart'" class="panel">
-      <h2>My Cart</h2>
-      <p>Your cart is empty.</p>
-    </section> -->
-
-    <section *ngIf="tab==='wishlist'" class="panel">
-      <h2>Wishlist</h2>
-      <p>No items yet.</p>
-    </section>
-
-    <section *ngIf="tab==='orders'" class="panel">
-      <h2>My Orders</h2>
-      <p>No orders found.</p>
-    </section>
-
-    <section *ngIf="tab==='details'" class="panel details">
-      <h2>My Details</h2>
-
-      <div class="info">
-        <div class="Detl"><span>Name :</span><p>{{arrOfProfile.firstName}} {{arrOfProfile.lastName}}</p></div>
-        <div class="Detl"><span>Email :</span><p>{{arrOfProfile.email}}</p></div>
-        <div class="Detl"><span>Phone :</span><p>{{arrOfProfile.phone}}</p></div>
-        <div class="Detl"><span>Address :</span><p>{{arrOfProfile.address}}</p></div>
-        <div class="Detl"><span>Zipcode :</span><p>{{arrOfProfile.zipcode}}</p></div>
-        <div class="Detl"><span>gender :</span><p>{{arrOfProfile.gender}}</p></div>
-        <div><button (click)="showEditPopup = true" class="change-btn">✏️ Edit</button></div>
-        <div><button (click)="showPopup = true" class="change-btn">Change password</button></div>
-        <div><button (click)="logOutFn()" class="edit-btn">Sign Out</button></div>
-        <div><button (click)="deleteAcc()" class="edit-btn">Delete Account</button></div>
+    @if (tab === 'cart') {
+     <section class="cart-panel">
+  <header class="cart-header">
+    <h2>My Cart</h2>
+    
+    @if (arrOfCart?.total) {
+      <div class="cart-summary">
+        <span>{{ arrOfCart.total.products }} Items • {{ arrOfCart.total.quantity }} Total Qty</span>
+        <span class="accent-price">{{ arrOfCart.total.price.current }} GEL</span>
       </div>
-    </section>
+    }
+
+    <div class="header-actions">
+      <button (click)="deleteCart()" class="btn-outline-red">Clear</button>
+      <button (click)="checkOut()" class="btn-solid-red">Checkout</button>
+    </div>
+  </header>
+
+  <div class="product-list">
+    @for (item of cartItemsWithDetails; track item._id) {
+      <article class="product-item">
+        <div class="product-img">
+          <img [src]="item.thumbnail" [alt]="">
+        </div>
+
+        <div class="product-info">
+          <span class="brand-tag">{{ item.brand }}</span>
+          <h3>{{ item.title }}</h3>
+        </div>
+
+        <div class="product-controls">
+          <div class="quantity-selector">
+            <button (click)="updateQty(item._id, -1)">-</button>
+            <input style="padding-left: 10px;" type="number" [value]=" item.cartQuantity" readonly>
+            <button (click)="updateQty(item._id, 1)">+</button>
+          </div>
+
+          <div class="price-group">
+            <span class="old-price">{{ item.price.beforeDiscount }} GEL</span>
+            <span class="item-total">{{ item.pricePerQuantity }} GEL</span>
+          </div>
+
+          <button (click)="deleteItem(item._id)" class="delete-btn">🗑️</button>
+        </div>
+      </article>
+    } @empty {
+      <div class="empty-cart">
+        <p>nothing in cart yet</p>
+      </div>
+    }
+  </div>
+</section>
+
+    }
+
+    @if (tab === 'orders') {
+      <section class="panel">
+        <h2>My Orders</h2>
+        <p>No orders found.</p>
+      </section>
+    }
+
+    @if (tab === 'details') {
+      <section class="panel details">
+        <h2>My Details</h2>
+
+        <div class="info">
+          <div class="Detl"><span>Name :</span><p>{{arrOfProfile.firstName}} {{arrOfProfile.lastName}}</p></div>
+          <div class="Detl"><span>Email :</span><p>{{arrOfProfile.email}}</p></div>
+          <div class="Detl"><span>Phone :</span><p>{{arrOfProfile.phone}}</p></div>
+          <div class="Detl"><span>Address :</span><p>{{arrOfProfile.address}}</p></div>
+          <div class="Detl"><span>Zipcode :</span><p>{{arrOfProfile.zipcode}}</p></div>
+          <div class="Detl"><span>gender :</span><p>{{arrOfProfile.gender}}</p></div>
+          <div><button (click)="showEditPopup = true" class="change-btn">✏️ Edit</button></div>
+          <div><button (click)="showPopup = true" class="change-btn">Change password</button></div>
+          <div><button (click)="logOutFn()" class="edit-btn">Sign Out</button></div>
+          <div><button (click)="deleteAcc()" class="edit-btn">Delete Account</button></div>
+        </div>
+      </section>
+    }
 
   </main>
 </div>
 
+@if (showPopup) {
+  <div class="popup" (click)="showPopup = false">
+    <div class="popup-content" (click)="$event.stopPropagation()">
+      <h2>Change Password</h2>
+      <input type="password" [(ngModel)]="oldPassword" placeholder="Old Password" />
+      <input type="password" [(ngModel)]="newPassword" placeholder="New Password" />
 
-<div class="popup" *ngIf="showPopup">
-  <div class="popup-content">
-    <h2>Change Password</h2>
-    <input type="password" [(ngModel)]="oldPassword" placeholder="Old Password" />
-    <input type="password" [(ngModel)]="newPassword" placeholder="New Password" />
-
-    <div class="popup-actions">
-      <button class="btn-save" (click)="changePass()">Save</button>
-      <button class="btn-cancel" (click)="showPopup = false">Cancel</button>
+      <div class="popup-actions">
+        <button class="btn-save" (click)="changePass()">Save</button>
+        <button class="btn-cancel" (click)="showPopup = false">Cancel</button>
+      </div>
     </div>
   </div>
-</div>
+}
 
-<div class="popup" *ngIf="showEditPopup">
-  <div class="popup-content">
-    <h2>Edit Profile</h2>
+@if (showEditPopup) {
+  <div class="popup" (click)="showEditPopup = false">
+    <div class="popup-content" (click)="$event.stopPropagation()">
+      <h2>Edit Profile</h2>
 
-    <input type="text" [(ngModel)]="arrOfProfile.firstName" placeholder="First Name" />
-    <input type="text" [(ngModel)]="arrOfProfile.lastName" placeholder="Last Name" />
-    
-    <input type="number" [(ngModel)]="arrOfProfile.age" placeholder="Age" />
-    <select [(ngModel)]="arrOfProfile.gender">
-      <option value="MALE">Male</option>
-      <option value="FEMALE">Female</option>
-      <option value="OTHER">Other</option>
-    </select>
+      <input type="text" [(ngModel)]="arrOfProfile.firstName" placeholder="First Name" />
+      <input type="text" [(ngModel)]="arrOfProfile.lastName" placeholder="Last Name" />
+      
+      <input type="number" [(ngModel)]="arrOfProfile.age" placeholder="Age" />
+      <select [(ngModel)]="arrOfProfile.gender">
+        <option value="MALE">Male</option>
+        <option value="FEMALE">Female</option>
+        <option value="OTHER">Other</option>
+      </select>
 
-    <input type="email" [(ngModel)]="arrOfProfile.email" placeholder="Email" />
-    <input type="text" [(ngModel)]="arrOfProfile.address" placeholder="Address" />
+      <input type="email" [(ngModel)]="arrOfProfile.email" placeholder="Email" />
+      <input type="text" [(ngModel)]="arrOfProfile.address" placeholder="Address" />
 
-    <input type="text" [(ngModel)]="arrOfProfile.phone" placeholder="Phone" />
-    <input type="text" [(ngModel)]="arrOfProfile.zipcode" placeholder="Zipcode" />
+      <input type="text" [(ngModel)]="arrOfProfile.phone" placeholder="Phone" />
+      <input type="text" [(ngModel)]="arrOfProfile.zipcode" placeholder="Zipcode" />
 
-    <div class="popup-actions">
-      <button class="btn-save" (click)="updateProfile()">Save</button>
-      <button class="btn-cancel" (click)="showEditPopup = false">Cancel</button>
+      <div class="popup-actions">
+        <button class="btn-save" (click)="updateProfile()">Save</button>
+        <button class="btn-cancel" (click)="showEditPopup = false">Cancel</button>
+      </div>
     </div>
   </div>
-</div>
+}

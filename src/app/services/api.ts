@@ -11,32 +11,42 @@ export class Api {
   getAll(url: string) {
     return this.http.get(this.httpBase + url);
   }
-  postAll(url: string, body : any) {
-    return this.http.post(this.httpBase + url, body)
+  postAll(url: string, body: any) {
+    return this.http.post(this.httpBase + url, body);
   }
-  getAllHeader(url: string, p0: { headers: { Authorization: string; }; }){
+  getAllHeader(url: string, p0: { headers: { Authorization: string } }) {
     return this.http.get(this.httpBase + url, {
-      headers : {
-          "Authorization" : `Bearer ${localStorage.getItem('access_token')} `
-    }})
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')} `,
+      },
+    });
   }
-  postAllHeader(url:string,body:any){
+  postAllHeader(url: string, body: any) {
     const headers = new HttpHeaders({
-      "Authorization" : `Bearer ${localStorage.getItem('access_token')} `
-    })
-    return this.http.post(this.httpBase + url, body, {headers})
+      Authorization: `Bearer ${localStorage.getItem('access_token')} `,
+    });
+    return this.http.post(this.httpBase + url, body, { headers });
   }
   patchData(url: string, body: any) {
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-      'Content-Type': 'application/json'
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      'Content-Type': 'application/json',
     });
     return this.http.patch(this.httpBase + url, body, { headers });
   }
   deleteData(url: string, body: any) {
-     return this.http.delete(this.httpBase + url, {
-      headers : {
-          "Authorization" : `Bearer ${localStorage.getItem('access_token')} `
-    }})
+    return this.http.delete(this.httpBase + url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')} `,
+      },
+    });
+  }
+  deleteDatas(url: string, body: any) {
+    return this.http.delete(this.httpBase + url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')} `,
+      },
+      body: body, 
+    });
   }
 }

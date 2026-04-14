@@ -2,26 +2,27 @@
   <nav class="breadcrumb">
     Products > Details
   </nav>
-    
+
   <div class="product-container">
-  <div class="gallery-section" id="image-carousel">
-    <div class="main-image-container" id="main-view">
-      <img [src]="currentImage" [alt]="'Product Image ' + (currentIndex + 1)" id="current-product-img">
-      
-      <button class="nav-btn prev" id="btn-prev-img" (click)="prevImage()">&#10094;</button>
-      <button class="nav-btn next" id="btn-next-img" (click)="nextImage()">&#10095;</button>
+    <div class="gallery-section" id="image-carousel">
+      <div class="main-image-container" id="main-view">
+        <img [src]="currentImage" [alt]="'Product Image ' + (currentIndex + 1)" id="current-product-img">
+
+        <button class="nav-btn prev" id="btn-prev-img" (click)="prevImage()">&#10094;</button>
+        <button class="nav-btn next" id="btn-next-img" (click)="nextImage()">&#10095;</button>
+      </div>
+
+      <div class="thumbnail-list" id="thumb-container">
+        @for (img of images; track $index) {
+          <img 
+            [src]="img" 
+            [class.active]="currentIndex === $index"
+            [id]="'thumb-' + $index"
+            (click)="setIndex($index)"
+            class="thumb">
+        }
+      </div>
     </div>
-    
-    <div class="thumbnail-list" id="thumb-container">
-      <img 
-        *ngFor="let img of images; let i = index" 
-        [src]="img" 
-        [class.active]="currentIndex === i"
-        [id]="'thumb-' + i"
-        (click)="setIndex(i)"
-        class="thumb">
-    </div>
-  </div>
 
     <div class="product-info">
       <h1 class="title">{{productArr[3]}}</h1>
@@ -32,7 +33,6 @@
         <span class="before">{{productArr[0]?.beforeDiscount}}{{productArr[0]?.currency}}</span>
       </div>
 
-
       <div class="actions">
         <button (click)="addToCart()" class="cart-btn" [disabled]="productArr[7] <= 0">Add to Cart</button>
         <button class="fav-btn"><i class="fa-solid fa-heart"></i></button>
@@ -42,15 +42,13 @@
 
       <ul class="details">
         <li>Shipping options</li>
-        <li>Warranty information  </li>
+        <li>Warranty information </li>
         <li>Payment and credit</li>
       </ul>
     </div>
   </div>
 
   <div class="specs">
-    
-
     <h2>Product Details</h2>
     <table>
       <tr><td>Model:</td><td>{{productArr[3]}}</td></tr>
@@ -61,61 +59,58 @@
       <tr><td>Resolution:</td><td>2532×1170</td></tr>
       <tr><td>Matrix Type:</td><td>OLED Display Retina XDR</td></tr>
       <tr><td>Touch Points:</td><td>10</td></tr>
-
-      </table>
-    
-
+    </table>
   </div>
 
-    <div class="reviews">
+  <div class="reviews">
     <h2>Ratings & Reviews</h2>
     <div class="average">Average rating: <strong>3.625</strong></div>
-@for(item of ratingsArr; track $index) {
-  <div class="review">
-    <div class="review-header">
-      <h3>{{ quotesArr[$index]?.author}}</h3>
-      
-      <span class="review-date">{{ item.createdAt | date:'longDate' }}</span>
-    </div>
+    
+    @for (item of ratingsArr; track $index) {
+      <div class="review">
+        <div class="review-header">
+          <h3>{{ quotesArr[$index]?.author}}</h3>
+          <span class="review-date">{{ item.createdAt | date:'longDate' }}</span>
+        </div>
 
-    <div class="stars">{{ getStars(item.value) }}{{item.value}}.0</div>
+        <div class="stars">{{ getStars(item.value) }}{{item.value}}.0</div>
 
-    <p>{{ quotesArr[$index]?.quote}}</p>
-  </div>
-}
+        <p>{{ quotesArr[$index]?.quote}}</p>
+      </div>
+    }
+    
     <button class="review-btn" (click)="openReviewPopup()">Leave a Review</button>
   </div>
 </div>
 
-
-
-
-<div class="review-overlay" *ngIf="isReviewPopupOpen" (click)="closeReviewPopup()">
-  <div class="review-modal" (click)="$event.stopPropagation()">
-    <div class="modal-header">
-      <h3>Submit Review</h3>
-      <button class="close-btn" (click)="closeReviewPopup()">&times;</button>
-    </div>
-
-    <div class="modal-body">
-      <div class="input-group">
-        <label>Category</label>
-        <select [(ngModel)]="reviewData.category" class="glass-select">
-          <option value="Game">Game</option>
-          <option value="Series">Series</option>
-          <option value="Movie">Movie</option>
-        </select>
+@if (isReviewPopupOpen) {
+  <div class="review-overlay" (click)="closeReviewPopup()">
+    <div class="review-modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Submit Review</h3>
+        <button class="close-btn" (click)="closeReviewPopup()">&times;</button>
       </div>
 
-      <div class="input-group">
-        <label>Your Thoughts</label>
-        <textarea [(ngModel)]="reviewData.comment" placeholder="Write your review here..." rows="4" class="glass-textarea"></textarea>
-      </div>
-    </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <label>Category</label>
+          <select [(ngModel)]="reviewData.category" class="glass-select">
+            <option value="Game">Game</option>
+            <option value="Series">Series</option>
+            <option value="Movie">Movie</option>
+          </select>
+        </div>
 
-    <div class="modal-footer">
-      <button class="cancel-btn" (click)="closeReviewPopup()">Cancel</button>
-      <button class="submit-btn" (click)="submitReview()">Post Review</button>
+        <div class="input-group">
+          <label>Your Thoughts</label>
+          <textarea [(ngModel)]="reviewData.comment" placeholder="Write your review here..." rows="4" class="glass-textarea"></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="cancel-btn" (click)="closeReviewPopup()">Cancel</button>
+        <button class="submit-btn" (click)="submitReview()">Post Review</button>
+      </div>
     </div>
   </div>
-</div>
+}

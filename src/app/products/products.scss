@@ -134,15 +134,37 @@ $w: #fff;
 
 #filter-categories {
   .category-list {
-    max-height: 200px;
-    overflow-y: auto;
-  }
+    max-height: 220px !important;
+    overflow-y: auto !important;
+    padding-right: 5px;
 
-  label {
-    display: block;
-    margin: 6px 0;
-    cursor: pointer;
-    font-size: 14px;
+    label {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px;
+      margin: 4px 0 !important;
+      border-radius: 10px !important;
+      cursor: pointer !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      color: #444 !important;
+      transition: all 0.2s ease !important;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.03) !important;
+        color: #000 !important;
+      }
+
+      input[type="checkbox"] {
+        accent-color: #000 !important; // Modern black checkbox
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    // Modern Scrollbar
+    &::-webkit-scrollbar { width: 4px; }
+    &::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
   }
 }
 

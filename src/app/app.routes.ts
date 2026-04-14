@@ -36,10 +36,6 @@ export const routes: Routes = [
     loadComponent: () =>import('./profile/profile').then((m) => m.Profile),
   },
   {
-    path: `cart`,
-    loadComponent: () =>import('./cart/cart').then((m) => m.Cart),
-  },
-  {
     path: `qrcode`,
     loadComponent: () =>import('./qrcode/qrcode').then((m) => m.Qrcode),
   },

@@ -135,6 +135,9 @@ $border: #e7e7e9;
       margin-left: 4px;
       font-size: 12px;
     }
+    :active{
+      color: $dark;
+    }
   }
 }
 
