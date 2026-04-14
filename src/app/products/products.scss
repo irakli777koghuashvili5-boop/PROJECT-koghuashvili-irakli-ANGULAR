@@ -651,6 +651,126 @@ $w: #fff;
     overflow-x: auto;
   }
 }
+.filter-mobile-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #2a9d8f, #264653);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 20px rgba(42, 157, 143, 0.25);
+  cursor: pointer;
+  transition: all 0.3s ease;
 
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(42, 157, 143, 0.35);
+  }
 
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 992px) {
+    display: flex;
+    margin: 20px auto;
+    width: fit-content;
+  }
+}
+
+.filter-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.4); 
+  z-index: 1000;
+  backdrop-filter: blur(8px); 
+  animation: fadeIn 0.4s ease;
+
+  &.show {
+    display: block;
+  }
+}
+
+.close-sidebar {
+  display: none;
+  background: #f1f5f9;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 20px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s ease;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    transform: rotate(90deg);
+  }
+
+  @media (max-width: 992px) {
+    display: flex;
+    justify-content: center;
+    align-items: center
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
  
+#filter-panel {
+  background: #ffffff;
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &::-webkit-scrollbar { width: 5px; }
+  &::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+  @media (max-width: 992px) {
+    position: fixed;
+    top: 90px;
+    left: 50%;
+    width: 95%;
+    max-width: 500px;
+    z-index: 1001;
+    transform: translate(-50%, -20px);
+    opacity: 0;
+    visibility: hidden;
+    
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    border-radius: 24px; 
+    padding: 40px 24px;
+    overflow-y: auto;
+    max-height: 80vh;
+
+    &.active {
+      transform: translate(-50%, 0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  h4 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #94a3b8;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+}
