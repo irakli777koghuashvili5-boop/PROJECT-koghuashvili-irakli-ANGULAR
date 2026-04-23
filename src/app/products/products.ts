@@ -12,7 +12,11 @@ import { Api } from '../services/api';
   templateUrl: './products.html',
   styleUrl: './products.scss',
 })
-export class Products implements OnInit {
+export class Products {
+
+  addToCart(id: string){
+  }
+
   getStars(rating: number): string {
     const validRating = Math.max(0, rating || 0);
     const filledStars = '⭐'.repeat(validRating);
@@ -21,7 +25,6 @@ export class Products implements OnInit {
   }
 
   carouselImages: string[] = [
-    'https://imgstore.alta.ge/images/f46d7ed9-1875-4baa-9e39-e23ab9870a51c06835fd-7f74-4d11-b649-f24ab8e99544.jpeg',
     'https://imgstore.alta.ge/images/b9a2676e-f771-4c0c-a4a4-c22f2be77bf61e707548-c487-4906-b655-dce76ab55d99.jpeg',
     'https://imgstore.alta.ge/images/51234eed-cdc6-48a5-9939-7ce2d9bada99d1700f8e-e42f-472d-baf7-ad117db20341.jpeg',
     'https://imgstore.alta.ge/images/245546b4-46ca-417b-b980-3695a92b807fa11a5bf3-fc10-454c-8311-dcb6af92239d.png',
@@ -35,7 +38,7 @@ export class Products implements OnInit {
   startAutoPlay() {
     this.carouselInterval = setInterval(() => {
       this.nextSlide();
-    }, 5000);
+    }, 2000);
   }
 
   nextSlide() {
@@ -61,7 +64,7 @@ export class Products implements OnInit {
   minPrice: number = 1;
   maxPrice: number = 10000;
   options: Options = {
-    floor: 0,
+    floor: 1,
     ceil: 10000,
     translate: (value: number): string => '$' + value,
   };
@@ -76,8 +79,9 @@ export class Products implements OnInit {
   selectedBrand: string = 'all';
   selectedCategories: number[] = [];
   selectedOrder: string = 'asc';
-
-  totalPages: number = 4;
+  limit: number = 12;
+  total: number = 4;
+  totalPages = this.total;
   currentPage: number = 1;
 
   constructor(
@@ -111,20 +115,23 @@ export class Products implements OnInit {
 
   loadProducts() {
     this.isLoading = true;
+
     this.api
       .getAll(`shop/products/all?page_index=${this.currentPage}&page_size=${this.selectedValue}`)
-      .subscribe({
-        next: (res: any) => {
-          this.products = res.products;
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        },
+      .subscribe((res: any) => {
+        this.products = res.products;
+        this.total = res.total;
+        this.totalPages = Math.ceil(res.total / res.limit);
+        this.limit = res.limit;
+        this.isLoading = false;
+        this.cdr.detectChanges();
       });
   }
 
   giveFilter() {
     this.isLoading = true;
-    const params: any = {
+
+    let params: any = {
       page_index: this.currentPage,
       page_size: this.selectedValue,
       keywords: this.keywords,
@@ -142,21 +149,22 @@ export class Products implements OnInit {
         params[key] === undefined ||
         params[key] === '' ||
         params[key].length === 0
-      ) {
+      ) {1
         delete params[key];
       }
     });
 
-    const queryString = new URLSearchParams(params).toString();
+    let queryString = new URLSearchParams(params).toString();
 
     this.api.getAll(`shop/products/search?${queryString}`).subscribe((res: any) => {
       this.products = res.products;
-      this.TheFiltredProductsByEverything = res;
+      this.totalPages = Math.ceil(res.total / res.limit);
+      this.total = res.total;
+      this.limit = res.limit;
       this.isLoading = false;
       this.cdr.detectChanges();
     });
   }
-
   resetFilters() {
     this.loadProducts();
   }
@@ -172,7 +180,7 @@ export class Products implements OnInit {
   }
 
   onCategoryChange(event: Event, item: any) {
-    const checked = (event.target as HTMLInputElement).checked;
+    let checked = (event.target as HTMLInputElement).checked;
     if (checked) {
       this.selectedCategories.push(item.id);
     } else {
@@ -181,20 +189,33 @@ export class Products implements OnInit {
   }
 
   get pages(): number[] {
-    const start = Math.max(1, this.currentPage - 2);
-    const end = Math.min(this.totalPages, this.currentPage + 2);
-    const pages: number[] = [];
+    let start = Math.max(1, this.currentPage - 2);
+    let end = Math.min(this.totalPages, this.currentPage + 2);
+    let pages: number[] = [];
     for (let i = start; i <= end; i++) {
       pages.push(i);
     }
     return pages;
   }
+  isFilteringActive(): boolean {
+    return (
+      this.keywords !== '' ||
+      this.selectedCategories.length > 0 ||
+      this.selectedBrand !== 'all' ||
+      this.minPrice !== 1 ||
+      this.maxPrice !== 10000
+    );
+  }
 
   goToPage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
-      this.loadProducts();
-      this.cdr.detectChanges();
+
+      if (this.isFilteringActive()) {
+        this.giveFilter();
+      } else {
+        this.loadProducts();
+      }
     }
   }
 
@@ -216,11 +237,11 @@ export class Products implements OnInit {
   isVisible = false;
 
   @HostListener('window:scroll', [])
-  onWindowScroll(): void {
+  onWindowScroll() {
     this.isVisible = window.scrollY > 500;
   }
 
-  scrollToTop(): void {
+  scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   isFilterOpen = false;

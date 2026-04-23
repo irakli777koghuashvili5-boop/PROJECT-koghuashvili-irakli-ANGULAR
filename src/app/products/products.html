@@ -4,7 +4,7 @@
     <div class="carousel-container">
       @for (img of carouselImages; track $index) {
         <div class="carousel-slide" [class.active]="$index === currentSlide">
-          <img [src]="img" alt="Promotional Banner">
+          <img [src]="img" alt="carousel">
         </div>
       }
     </div>
@@ -118,10 +118,10 @@
               </div>
 
               <div class="actions">
-                <button class="heart" (click)="$event.stopPropagation();">
+                <button class="heart" >
                   <i class="fa-solid fa-heart"></i>
                 </button>
-                <button class="cart" (click)="$event.stopPropagation();">
+                <button class="cart" (click)="addToCart(item.id)" >
                   <i class="fa-solid fa-cart-shopping"></i> 
                   <span>Add to Cart</span>
                 </button>
