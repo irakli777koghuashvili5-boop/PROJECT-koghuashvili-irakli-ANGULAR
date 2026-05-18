@@ -6,35 +6,36 @@ import { Api } from '../services/api';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterModule , CommonModule, RouterLink],
+  imports: [RouterModule, CommonModule, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class Header {
-  constructor(private api: Api, private cdr: ChangeDetectorRef){}
+  constructor(
+    private api: Api,
+    private cdr: ChangeDetectorRef,
+    public authState: Api,
+  ) {}
   seeSign: boolean = true;
   isMenuOpen = false;
   isScrolled = false;
-  firstName = localStorage.getItem(`firstName`)
-  avatar = localStorage.getItem(`avatar`)
-  
+  firstName = localStorage.getItem(`firstName`);
+  avatar = localStorage.getItem(`avatar`);
+
   ngOnInit() {
     this.checkAuthentication();
-    this.avatar = localStorage.getItem(`avatar`)
+    this.avatar = localStorage.getItem(`avatar`);
     console.log(this.avatar);
-    
   }
 
   checkAuthentication() {
     const userId = localStorage.getItem('access_token');
     if (userId) {
       this.seeSign = false;
-    }
-    else {
+    } else {
       this.seeSign = true;
     }
   }
-
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -44,5 +45,4 @@ export class Header {
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
-
 }

@@ -9,12 +9,12 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [RouterLink, FormsModule],
   templateUrl: './sign-in.html',
-  styleUrls: ['./sign-in.scss'], 
+  styleUrls: ['./sign-in.scss'],
 })
 export class SignIn {
   mainResp: any = {};
   firstname = localStorage.getItem('firstName');
-  isPasswordVisible = false; 
+  isPasswordVisible = false;
 
   togglePasswordVisibility(): void {
     this.isPasswordVisible = !this.isPasswordVisible;
@@ -24,16 +24,15 @@ export class SignIn {
     private api: Api,
     private cdr: ChangeDetectorRef,
     private router: Router,
+    private authState: Api,
   ) {}
-
-  onClickSignIn(form : any) {
-
+  onClickSignIn(form: any) {
     this.api.postAll(`auth/sign_in`, form.value).subscribe({
       next: (res: any) => {
         if (res.access_token && res.refresh_token) {
           localStorage.setItem('access_token', res.access_token);
           localStorage.setItem('refresh_token', res.refresh_token);
-
+          this.authState.login();
           this.api
             .getAllHeader(`auth`, {
               headers: {
@@ -42,25 +41,27 @@ export class SignIn {
             })
             .subscribe({
               next: (res1: any) => {
+                this.router.navigateByUrl('/home');
                 this.api.show(`Welcome back`);
                 localStorage.setItem('userId', res1._id);
                 localStorage.setItem('firstName', res1.firstName);
                 localStorage.setItem(`avatar`, res1.avatar);
-                this.router.navigateByUrl('/home');
                 this.cdr.detectChanges();
               },
               error: (err: any) => {
                 const status = err.status || err.error?.statusCode;
 
-                if(status === 400){
+                if (status === 400) {
                   this.api.show(`Wrong email or password`);
-                  this.cdr.detectChanges()
+                  this.cdr.detectChanges();
                 }
 
                 if (status === 409) {
-                  this.api.show('Email not verified. Confirmation email sent to ' + form.value.email);
+                  this.api.show(
+                    'Email not verified. Confirmation email sent to ' + form.value.email,
+                  );
 
-                  this.api.postAll(`auth/verify_email`, { email:  form.value.email }).subscribe({
+                  this.api.postAll(`auth/verify_email`, { email: form.value.email }).subscribe({
                     next: (res2: any) => console.log('Verification sent:', res2),
                     error: (errVerify: any) => {
                       this.api.show('Failed to send confirmation email.');

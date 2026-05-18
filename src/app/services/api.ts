@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ChangeDetectorRef, Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable, signal } from '@angular/core';
 import { Product } from '../model/model';
 import { BehaviorSubject } from 'rxjs';
 
@@ -70,5 +70,16 @@ export class Api {
       open: false,
       message: '',
     });
+  }
+
+  isLoggedIn = signal(!!localStorage.getItem('access_token'));
+
+  login() {
+    this.isLoggedIn.set(true);
+  }
+
+  logout() {
+    localStorage.clear();
+    this.isLoggedIn.set(false);
   }
 }
