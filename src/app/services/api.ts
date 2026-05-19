@@ -64,7 +64,7 @@ export class Api {
       message: message,
     });
   }
-
+    
   hide() {
     this.alertState.next({
       open: false,
